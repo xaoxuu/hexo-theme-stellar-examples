@@ -1,0 +1,18 @@
+logo:
+  icon: /assets/icon.svg
+  title: Stellar
+  subtitle: '每个人的独立博客 | Designed by xaoxuu'
+menubar:
+  items: []
+site_tree:
+  home:
+    sidebar: starter, welcome, recent
+  index_blog:
+    sidebar: starter, welcome, recent
+  index_topic:
+    menu_id: topic
+  topic:
+    menu_id: topic
+
+article:
+  share: [wechat, weibo, email, link]
