@@ -1,0 +1,34 @@
+starter:
+  layout: linklist
+  title: 入门向导
+  columns: 1
+  items:
+    - icon: solar:notebook-bookmark-bold-duotone
+      title: 查阅 Hexo 文档
+      url: https://xaoxuu.com/wiki/stellar/#start
+    - icon: solar:notebook-bookmark-bold-duotone
+      title: 查阅 Stellar 文档
+      url: https://xaoxuu.com/wiki/stellar/#start
+    - icon: solar:code-file-bold-duotone
+      title: 查看 Stellar 源码
+      url: https://github.com/xaoxuu/hexo-theme-stellar
+    - icon: solar:medal-ribbons-star-bold-duotone
+      title: 探访 Stellar 社区
+      url: https://xaoxuu.com/wiki/stellar/examples.html
+    - icon: solar:planet-bold-duotone
+      title: 探索 Stellar 创意玩法
+      url: https://xaoxuu.com/wiki/stellar/articles.html
+    
+
+
+sociallist:
+  layout: linklist
+  title: 社交
+  columns: 1
+  items:
+    - icon: solar:smile-circle-bold-duotone
+      title: 小伙伴们 & 朋友文章
+      url: /friends/
+    - icon: solar:chat-line-bold-duotone
+      title: 关于本站 & 留言板
+      url: /about/

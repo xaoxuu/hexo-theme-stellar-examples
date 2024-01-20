@@ -1,0 +1,24 @@
+name: 探索
+title: 探索者的笔记本
+logo: 
+  icon: /assets/icon.svg
+  title: '[${config.title}](/)'
+  subtitle: '探索者的笔记本'
+
+sidebar: 
+  - layout: search
+    override: search
+    filter: /explore/
+    placeholder: 在此处搜索...
+  - toc
+
+comments:
+  giscus:
+    'data-term': '23'
+    'data-mapping': number
+
+base_dir: /
+toc:
+  '探索':
+    - explore/index
+    - bookmark/index
