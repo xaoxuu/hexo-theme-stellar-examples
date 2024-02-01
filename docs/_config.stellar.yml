@@ -16,3 +16,9 @@ site_tree:
 
 article:
   share: [wechat, weibo, email, link]
+
+style:
+  border-radius:
+    bar: 4px
+    card: 4px
+    block: 4px
