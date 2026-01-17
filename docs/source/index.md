@@ -139,7 +139,7 @@ npm: 6.14.13 ~ 10.2.3
 
 本项目永久开源免费，如果您喜欢本项目，请[点个赞](https://github.com/xaoxuu/hexo-theme-stellar/)支持一下吧～
 
-{% image https://starchart.cc/xaoxuu/hexo-theme-stellar.svg %}
+{% image https://starchart.cc/xaoxuu/hexo-theme-stellar.svg  ratio:1024/400 %}
 
 ## 开源许可协议
 
