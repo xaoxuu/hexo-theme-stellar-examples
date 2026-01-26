@@ -1,0 +1,95 @@
+.widget-wrapper.user-card
+  .widget-header+.widget-body
+    margin: 0.75rem 0
+.widget-wrapper.user-card .widget-header
+  a
+    display: flex
+    align-items: center
+    color: var(--text-p2)
+    trans1 all
+    svg
+      margin-right: 4px
+      width 1em
+      height: 1em
+    &:hover
+      color: var(--text)
+
+.widget-wrapper.user-card .widget-body
+  text-align: center
+  background: var(--card)
+  border-radius: $border-card-s
+  padding: 1rem
+  box-shadow: $boxshadow-card
+
+.widgets .widget-wrapper.user-card 
+  .avatar
+    display: block
+    border-radius: 100%
+    margin: 1rem auto 1.25rem auto
+    max-width: 128px
+    overflow: hidden
+    img
+      display: block
+      aspect-ratio: 1
+    @media screen and (max-width: $device-tablet)
+      max-width: 50%
+
+  p.username
+    font-weight: 900
+    font-size: $fsh2
+    color: var(--text)
+    margin: 0
+  p.bio
+    font-size: $fs-13
+    margin: 0
+
+  .follow 
+    font-weight: 500
+    border-radius: 64px
+    margin-top: 1rem
+    padding: 0.5rem 1rem
+    background: var(--theme)
+    color: white
+    font-size: 1rem
+    align-self: stretch
+    text-align: center
+    line-height: 1.5
+    display: flex
+    align-items: center
+    justify-content: center
+    trans1: background
+    svg
+      margin-right: 6px
+      height: 1.5em
+      width: auto
+    &:hover
+      background: var(--accent)
+
+  .buttons
+    margin-top: 1rem
+    align-self: stretch
+    display: grid
+    grid-gap: 2px
+    grid-template-columns: repeat(auto-fill, "calc((100% - 2 * %s) / 3)" % 2px)
+
+  .btn
+    display: flex 
+    flex-direction: column
+    align-items: center
+    color: inherit
+    border: 1px solid transparent
+    border-radius: 4px
+    padding: 0.25rem 0
+    trans1: background
+    &:hover
+      background: var(--block)
+    .title
+      font-size: 1rem
+      font-weight: 700
+    .desc
+      font-size: $fs-12
+      color: var(--text-p3)
+      font-weight: 500
+
+.widget-wrapper.user-card .widget-header+.widget-body
+  margin-top: 4px

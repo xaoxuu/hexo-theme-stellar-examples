@@ -1,0 +1,56 @@
+:root
+  --swiper-theme-color: var(--theme) !important
+.swiper
+  width: 100%
+  border-radius: 4px
+  --gap-p: 2rem
+.swiper:not(.swiper-initialized)
+  display: none
+div.swiper-slide
+  text-align: center
+  display: -webkit-box
+  display: -ms-flexbox
+  display: -webkit-flex
+  display: flex
+  align-self: center
+  -webkit-box-pack: center
+  -ms-flex-pack: center
+  -webkit-justify-content: center
+  justify-content: center
+  -webkit-box-align: center
+  -ms-flex-align: center
+  -webkit-align-items: center
+  align-items: center
+  width: 50%
+  img
+    border-radius: 4px
+
+.swiper[width='max'] .swiper-slide
+  width: 100%
+
+.swiper[width='min'] .swiper-slide
+  width: 25%
+
+.swiper[effect='cards'] .swiper-slide
+  max-width: 75%
+
+.swiper-button-prev,.swiper-button-next
+  padding: 1rem 0.25rem
+  margin-top: -2rem !important
+  border-radius: 40px
+  background: alpha(white, 0.25)
+  trans1 background
+  --swiper-theme-color: var(--text) !important
+  &:after
+    font-size: 1.2rem !important
+    font-weight: 700 !important
+    color: var(--swiper-theme-color)
+  &:hover
+    background: white !important
+    --swiper-theme-color: var(--accent) !important
+
+.swiper-button-prev:after
+  transform: translateX(-1px)
+
+.swiper-button-next:after
+  transform: translateX(1px)

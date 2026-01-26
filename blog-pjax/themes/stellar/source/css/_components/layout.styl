@@ -1,0 +1,101 @@
+.l_body
+  display: grid
+  grid-template-columns: 1fr minmax(200px,var(--width-main)) 1fr
+  grid-gap: calc(var(--gap-margin) * 4)
+  @media screen and (max-width: $device-desktop)
+    grid-gap: calc(var(--gap-margin) * 2)
+  margin: auto
+  font-size: var(--fsp)
+
+.l_body aside
+  z-index: 8
+  flex-shrink: 0
+  position: sticky
+  position: -webkit-sticky
+  // 侧边栏容器宽度
+  --width-sidebar: calc(var(--gap-margin) * 2 + var(--gap-padding) * 2 + var(--side-content-width))
+  width: var(--width-sidebar)
+
+.l_body .l_left
+  justify-self: right
+  top: calc(var(--gap-margin) * 2)
+.l_body .l_right
+  justify-self: left
+  max-height: calc(100% - calc(var(--gap-margin) * 2) * 2)
+  .widgets
+    height: 100%
+    overflow visible
+
+// 平板布局
+@media screen and (max-width: $device-laptop)
+  .l_body .l_right
+    --gap-margin: 16px
+  .laptop-only
+    display: block !important
+  .l_body
+    grid-gap: calc(var(--gap-margin) * 1)
+    .l_right
+      position: fixed
+      transform: translateX(320px)
+      transition: transform .38s ease-out
+      margin: 0
+      --inset: 8px
+      right: var(--inset)
+      top: calc(var(--gap-margin) * 2)
+      max-height: 'calc(%s - %s * 2 - %s)' % (100vh var(--gap-margin) $rightbar-bottom-margin)
+      box-shadow: $boxshadow-card-float
+      z-index: 10
+      background: var(--background)
+      overflow: auto
+      scrollbar(0, 0)
+      --blur-bg: var(--bg-a60)
+      --blur-px: 50px
+  .l_body[rightbar]
+    .l_right
+      transform: translateX(0px)
+    .main-mask
+      // opacity 1
+      pointer-events: inherit
+
+// 手机布局
+@media screen and (max-width: $device-mobile-max)
+  .mobile-only
+    display: block !important
+  .l_body
+    padding: 0
+    display: block
+    .l_left
+      position: fixed
+      transform: translateX(-320px)
+      transition: transform .38s ease-out
+      margin: 0
+      --inset: 8px
+      left: var(--inset)
+      top: calc(var(--gap-margin) * 2)
+      max-height: 'calc(%s - %s * 2 - %s)' % (100vh var(--gap-margin) $leftbar-bottom-margin)
+      .leftbar-container
+        --inset: 8px
+        height: 'calc(%s - %s * 2 - %s)' % (100vh var(--gap-margin) $leftbar-bottom-margin)
+      box-shadow: $boxshadow-card-float
+      z-index: 10
+    .l_main
+      max-width: 100%
+  .l_body[leftbar]
+    .l_left
+      transform: translateX(0px)
+    .main-mask
+      // opacity 1
+      pointer-events: inherit
+
+
+.main-mask
+  position: fixed
+  pointer-events: none
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  background: rgba(black, 0.1)
+  z-index: 9
+  opacity 0
+  trans1 opacity

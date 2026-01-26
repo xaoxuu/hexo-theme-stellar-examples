@@ -1,0 +1,77 @@
+.mobile-only
+  display: none
+  @media screen and (max-width: $device-mobile-max)
+    display: block !important
+
+.mobile-hidden
+  @media screen and (max-width: $device-mobile-max)
+    display: none !important
+
+.float-panel
+  position: sticky
+  grid-column-end: span 3
+  --inset: 2rem
+  right: 0
+  bottom: calc(var(--inset) * 2)
+  margin-left: auto
+  margin-right: var(--inset)
+  float: right
+  z-index: 999999
+  display: flex
+  justify-content: center
+  flex-direction: column
+  border-radius: 64px
+  @media screen and (min-width: $device-mobile-max)
+    margin-right: 3rem
+  overflow: hidden
+  trans1: all
+  &:before,&:after
+    border-radius: 64px
+
+  newblur()
+
+
+// 侧边栏弹出按钮
+.float-panel button
+  cursor: pointer
+  color: var(--text)
+  background: none
+  width: 48px
+  height: 48px
+  line-height: 0
+  font-size: 28px
+  margin: 0
+  display: flex
+  >*
+    path#sep
+      trans1 transform
+    width: auto
+    height: 28px
+
+// 侧边栏弹出后
+.l_body[leftbar] .float-panel, .l_body[rightbar] .float-panel
+  box-shadow: 0 0 4px -1px var(--theme), 0 0 16px -4px var(--theme), 0 0 32px -12px var(--theme), 0 0 128px -32px var(--theme)
+  &:before
+    background: var(--bg-a50)
+
+.l_body[leftbar] .float-panel button.leftbar-toggle
+  color: var(--theme)
+  svg g
+    fill: currentColor
+    fill-opacity: 0.3
+    path#sep
+      transform: translateX(2px)
+
+
+// 侧边栏有内容时才显示弹出按钮
+.l_body .l_right:empty+.float-panel button.rightbar-toggle
+  display: none !important
+
+.l_body[rightbar] .float-panel button.rightbar-toggle
+  color: var(--theme)
+  svg g
+    fill: currentColor
+    fill-opacity: 0.3
+    path#sep
+      transform: translateX(2px)
+

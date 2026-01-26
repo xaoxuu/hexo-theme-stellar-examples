@@ -1,0 +1,57 @@
+$lazyTransitionType = hexo-config('plugins.lazyload.transition')
+$loadingImageSize = 2rem
+
+img:not([src])
+  visibility: hidden
+
+.lazy-box
+  position: relative
+  overflow: hidden
+  line-height: 0
+  &.async // 通过 data-service 异步创建的懒加载元素，没办法知道宽高
+    background: var(--block)
+    min-height: 4rem
+
+// 懒加载
+img[data-ll-status]
+  z-index: 1
+  &:not(.loaded)
+    opacity: 0
+  &.loaded,&.error
+    opacity: 1
+  if $lazyTransitionType == 'blur'
+    trans1 all 0.5s
+    &:not(.loaded)
+      filter blur(20px)
+      -webkit-filter blur(20px)
+    &.loaded,&.error
+      filter none
+      -webkit-filter none
+  else
+    trans1 all 0.38s
+
+// 加载占位动画
+img[data-ll-status]+.lazy-icon
+  position: absolute
+  width: $loadingImageSize
+  height: $loadingImageSize
+  max-width: 100%
+  max-height: 100%
+  top: 50%
+  left: 50%
+  transform: translateX(-50%) translateY(-50%)
+  background-size: contain
+  background-repeat: no-repeat
+  background-position: center
+
+// 加载完成
+img[data-ll-status].loaded
+  &+.lazy-icon
+    display: none
+
+// 加载失败
+img[data-ll-status].error
+  width: $loadingImageSize
+  height: $loadingImageSize
+  &+.lazy-icon
+    display: none

@@ -1,0 +1,23 @@
+.l_left footer.footer
+  margin: 0.5rem var(--gap-max) 1rem
+
+.social-wrap
+  display: grid
+  grid-gap: 0.25rem 0.25rem
+  grid-template-columns: repeat(auto-fill, 32px)
+  text-align: center
+  .social
+    line-height: 0
+    display: inline-block
+    padding: 6px
+    border-radius: 32px
+    filter: grayscale(100%)
+    overflow: hidden
+    background: transparent
+    trans3: box-shadow background transform
+    &:hover
+      z-index: 1
+      filter: unset
+      background: var(--bg-a100)
+    img
+      border-radius: 2px

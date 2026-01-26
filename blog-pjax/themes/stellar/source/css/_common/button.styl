@@ -1,0 +1,68 @@
+button
+  border: none
+  font-weight: 500
+  outline: none
+  disable-select()
+  cursor: pointer
+  background: none
+
+a.button
+  font-weight: 500
+  line-height: 1
+  padding: 0.75rem 2rem
+  border-radius: $border-button
+  font-size: $fs-15
+  user-select: none
+  &.theme
+    background: var(--theme)
+    color: var(--card)
+    &:hover
+      background: var(--accent)
+  &.start
+    border-radius: 100px
+    background: var(--text-p1)
+    color: var(--card)
+
+a[onclick]:hover
+  cursor: pointer
+
+a.button.start.gradient
+  position relative
+  ondark()
+    transition: 0.38s ease-out
+    z-index: 0
+    background: convert(hexo-config('style.gradient.start'))
+    background-size: 1000%
+    color: white
+    text-shadow: 0 0 1px rgba(0,0,0,0.12)
+    animation: glow 60s linear infinite
+    @keyframes glow {
+      from {
+        background-position: 0%
+      }
+      to {
+        background-position: 1000%
+      }
+    }
+    &:after
+      content: ''
+      position absolute
+      left: 0
+      right: 0
+      top: 0
+      bottom: 0
+      border-radius: 100px
+      background: inherit
+      z-index -1
+      filter: blur(12px)
+      opacity: 0.5
+      transition: 0.38s ease-out
+    &:hover:after
+      filter: blur(36px)
+      opacity 1
+
+  :root[data-theme="dark"] &
+    ondark()
+  :root:not([data-theme]) &
+    @media (prefers-color-scheme: dark)
+      ondark()

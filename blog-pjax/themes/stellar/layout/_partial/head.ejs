@@ -1,0 +1,165 @@
+<%
+function generate_title() {
+  if (page.wiki) {
+    const proj = theme.wiki.tree[page.wiki]
+    const wiki = proj?.name || page.wiki
+    if (page.title) {
+      return wiki + __('symbol.colon') + page.title + ' - ' + config.title;
+    } else {
+      return wiki + ' - ' + config.title;
+    }
+  } else {
+    if (page.title) {
+      return page.title + ' - ' + config.title;
+    } else if (page.category) {
+      return __('btn.category') + __('symbol.colon') + page.category + ' - ' + config.title;
+    } else if (page.tag) {
+      return __('btn.tag') + __('symbol.colon') + page.tag + ' - ' + config.title;
+    }
+  }
+  return config.title;
+}
+function generate_description() {
+  if (theme.open_graph && theme.open_graph.enable) {
+    return '';
+  }
+  if (page.wiki) {
+    const proj = theme.wiki.tree[page.wiki]
+    if (proj?.description) {
+      return '<meta name="description" content="' + proj.description + '">'
+    }
+  }
+  if (page.description || page.excerpt || page.content) {
+    return '<meta name="description" content="' + truncate(strip_html(page.description || page.excerpt || page.content), {length: 150}) + '">';
+  }
+  return '<meta name="description" content="' + config.description + '">';
+}
+function generate_keywords() {
+  if (page.keywords && page.keywords.length > 0) {
+    return '<meta name="keywords" content="' + page.keywords + '">';
+  } else if (page.tags && page.tags.length > 0) {
+    return '<meta name="keywords" content="' + page.tags.map(tag => tag.name).join(',') + '">';
+  } else if (config.keywords && config.keywords.length > 0) {
+    return '<meta name="keywords" content="' + config.keywords + '">';
+  } else {
+    return '';
+  }
+}
+
+function generate_robots() {
+  const IS_BACKUP = process.env.IS_BACKUP === 'true';
+  if (IS_BACKUP) {
+    return '<meta name="robots" content="noindex, nofollow">';
+  }
+  if (is_home() == true) {
+    return '';
+  }
+  if (page.robots) {
+    return '<meta name="robots" content="' + page.robots + '">';
+  }
+}
+function og_args() {
+  var args = {};
+  if (theme.open_graph.twitter_id) {
+    args.twitter_id = theme.open_graph.twitter_id;
+  }
+  if (page.layout == 'post' && page.cover) {
+    args.twitter_card = 'summary_large_image';
+  }
+  args.image = config.avatar || (config.email ? gravatar(config.email) : null);
+  return Object.assign(args, page.open_graph);
+}
+
+function preconnect() {
+  var el = '';
+  for (let href of (theme.preconnect || [])) {
+    el += `<link rel="preconnect" href="${href}" crossorigin>`;
+  }
+  return el;
+}
+
+function custom_inject() {
+  var el = '';
+  for (let item of (config.inject?.head || [])) {
+    el += item;
+  }
+  for (let item of (theme.inject?.head || [])) {
+    el += item;
+  }
+  for (let item of (page.inject?.head || [])) {
+    el += item;
+  }
+  return el;
+}
+
+function generate_canonical() {
+  const originalHost = theme.canonical.originalHost || '';
+  if (originalHost.length > 0) {
+    var path = pretty_url(page.path) || '/';
+    if (path.startsWith('/404') || path.startsWith('404')) {
+      return '';
+    }
+    if (path.endsWith('.html') && path.length > 5) {
+      path = path.split('.html')[0];
+    }
+    return `<link rel="canonical" href="https://${originalHost}${path}">`;
+  }
+  return '';
+}
+
+%>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="<%- stellar_info('tree') %>" theme-name="<%- stellar_info('name') %>" theme-version="<%- stellar_info('version') %>">
+  <%- generate_canonical() %>
+  <%- generate_robots() %>
+  <%- meta_generator() %>
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <%- preconnect() %>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title><%- generate_title() %></title>
+
+  <% if (theme.open_graph && theme.open_graph.enable) { %>
+    <%- open_graph(og_args()) %>
+  <% } %>
+  <%- generate_description() %>
+  
+  <%- generate_keywords() %>
+
+  <!-- feed -->
+  <% if (config.feed && config.feed.path) { %>
+    <%
+      var paths = Array.isArray(config.feed.path)
+        ? config.feed.path
+        : [config.feed.path];
+    %>
+
+    <% paths.forEach(function (path) { %>
+      <% if (path) { %>
+        <%- feed_tag(path, { title: config.title }) %>
+      <% } %>
+    <% }) %>
+  <% } %>
+
+  <link rel="stylesheet" href="<%- url_for(`${theme.stellar.main_css}?v=${stellar_info('version')}`) %>">
+
+
+  <% if (config.favicon) { %>
+    <%- favicon_tag(config.favicon) %>
+  <% } %>
+
+  <% if (config.highlight && config.highlight.enable == true && config.highlight.hljs == true) { %>
+    <%- css(theme.style.codeblock.highlightjs_theme) %>
+  <% } %>
+
+  <%- json_ld() %>
+  <%- custom_inject() %>
+</head>

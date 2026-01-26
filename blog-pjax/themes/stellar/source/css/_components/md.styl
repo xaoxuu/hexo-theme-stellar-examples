@@ -1,0 +1,103 @@
+// 文本区域
+.md-text
+  max-width: 100%
+  padding: 1rem
+  color: var(--text-p1)
+  line-height: 1.6
+  word-break: break-word
+
+// 摘要
+.md-text.excerpt
+  p
+    font-size: $fs-14
+    margin: 1em 0
+
+// 正文区域
+.md-text.content
+  position: relative
+  padding-top: 0
+  padding-bottom: 2rem
+  overflow: hidden
+
+
+.md-text
+  ul:not(:last-child),
+  ol:not(:last-child)
+    padding-bottom: .5rem
+    margin: 0 .25rem
+  blockquote,ul,ol
+    p,ul,ol
+      --fsp: $fsp1
+      font-size: var(--fsp)
+      line-height: 1.5
+      code 
+        font-size: inherit
+        padding: 0
+        background: none
+  p,blockquote,.tag-plugin,ul,ol,.highlight,table
+    *
+      --gap-p: var(--gap-p-compact)
+  p,ul,ol
+    margin-top: 'calc(%s - 4px)' % var(--gap-p)
+    margin-bottom: 'calc(%s - 4px)' % var(--gap-p)
+  .tag-plugin,iframe
+    margin-top: var(--gap-p)
+    margin-bottom: var(--gap-p)
+  iframe
+    margin-left: auto
+    margin-right: auto
+    display: block
+
+// titles
+.md-text.content
+  blockquote, .tag-plugin
+    h2,h3,h4,h5,h6
+      margin-top: 0.25em
+      margin-bottom: 0.25em
+      
+.md-text.content:first-child .tag-plugin:first-child
+  margin-top: 0
+
+.md-text p
+  font-size: var(--fsp)
+
+.md-text pre
+  -webkit-font-smoothing: auto
+  -moz-osx-font-smoothing: auto
+  &.mermaid
+    overflow: auto
+
+.md-text
+  .center
+    align-self: center
+
+// div
+.md-text>div
+  margin: var(--gap-p) 0
+
+// 图片样式
+.md-text img
+  margin: auto
+  display: block
+.md-text.content 
+  p>img, .tag-plugin.image .image-bg
+    border-radius: $border-image
+
+// 链接样式
+li:not([class]) a:not([class])
+p:not([class]) a:not([class])
+table a:not([class])
+  position: relative
+  text-decoration: none
+  trans1 all
+  border-radius: 0
+  background: linear-gradient(0deg,var(--block-border),var(--block-border)) no-repeat left 100%/100% 2px
+  &:hover
+    text-decoration: none
+    color: var(--link)
+    border-radius: 4px
+    background: linear-gradient(0deg,var(--link-a20),var(--link-a20)) no-repeat left 100%/100% 100%
+  &:has(img)
+    background: none
+    &:hover
+      background: none

@@ -1,0 +1,44 @@
+<%
+function layoutWikiCover() {
+  var el = '';
+  const proj = theme.wiki.tree[page.wiki]
+  if (proj == undefined) {
+    return el;
+  }
+  if (proj.homepage.path !== page.path) {
+    return;
+  }
+  if (proj.coverpage == undefined || proj.coverpage === false || proj.coverpage === '[]') {
+    return el;
+  }
+  var coverpage = proj.coverpage;
+  let cover = proj.cover;
+  let title = proj.title || page.title;
+  let desc = proj.description || page.description;
+  if (coverpage === true) {
+    coverpage = ['cover', 'title', 'description'];
+  }
+  el += '<div class="l_cover wiki">';
+  el += '<article class="cover-wrap md-text">';
+
+  if (cover?.length > 0 && coverpage.includes('cover')) {
+    el += `<div class="preview cover"><img src="${cover}"/></div>`
+  }
+  if (title && coverpage.includes('title')) {
+    el += '<div class="cover-title">';
+    el += '<span>' + title + '</span>';
+    el += '</div>';
+  }
+  if (desc && coverpage.includes('description')) {
+    el += '<div class="description">' + desc + '</div>';
+  }
+  el += '<div class="start-wrap">';
+  el += '<a class="button start gradient" href="#start">' + (proj.start || __('btn.getting_started')) + '</a>';
+  el += '</div>';
+  el += '</article>';
+  el += '</div>';
+  el += '<hr>';
+  return el;
+}
+%>
+<%- layoutWikiCover() %>

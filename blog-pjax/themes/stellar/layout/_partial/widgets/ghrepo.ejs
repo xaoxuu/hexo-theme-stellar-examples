@@ -1,0 +1,50 @@
+<%
+function layoutDiv() {
+  var el = '';
+  var repo;
+  var branch = 'main';
+  if (page.repo) {
+    repo = page.repo
+  } else if (theme.wiki.tree[page.wiki]?.repo) {
+    const proj = theme.wiki.tree[page.wiki]
+    repo = proj.repo
+    if (proj.branch != undefined) {
+      branch = proj.branch
+    }
+  }
+  if (repo == undefined) {
+    return el;
+  }
+  // 布局
+  el += `<widget class="widget-wrapper${scrollreveal(' ')} ghrepo">`
+  // body
+  el += '<div class="widget-body">';
+  el += '<div class="items data-service ds-ghinfo" data-api="https://' + theme.api_host.ghapi + '/repos/' + repo + '">';
+  el += '<a class="repo" href="https://github.com/' + repo + '" target="_blank" rel="external nofollow noopener noreferrer">';
+    el += '<div class="repo-name flex-row">';
+      el += icon('github:repo')
+      el += repo;
+    el += '</div>';
+    el += '<div class="repo-desc"><span type="text" id="description">&nbsp;</span></div>';
+    el += '<div class="grid">';
+      el += '<div class="flex-row">';
+        el += icon('github:star')
+        el += '<span type="text" id="stargazers_count"></span>';
+      el += '</div>';
+      el += '<div class="flex-row">';
+        el += icon('github:fork')
+        el += '<span type="text" id="forks_count"></span>';
+      el += '</div>';
+      el += '<div class="flex-row data-service ds-ghinfo" index="0" data-api="https://' + theme.api_host.ghapi + '/repos/' + repo + '/tags">';
+        el += icon('github:tag')
+        el += '<span type="text" id="latest-tag-name">0</span>';
+      el += '</div>';
+    el += '</div>';
+  el += '</a>';
+  el += '</div>';
+  el += '</div>';
+  el += '</widget>';
+  return el;
+}
+%>
+<%- layoutDiv() %>

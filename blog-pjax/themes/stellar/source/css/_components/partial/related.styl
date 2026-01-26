@@ -1,0 +1,107 @@
+.related-wrap
+  padding: 0 1rem
+  margin: 4rem 0
+  &:empty
+    display: none
+  section.header
+    display: flex
+    justify-content: space-between
+    align-items: center
+    >span.title
+      padding: 0.25rem 0
+  section.footer
+    margin-top: 1rem
+
+  a.more
+    padding: 0.25rem 0.5rem
+    border-radius: $border-bar
+    color: var(--text-p1)
+
+article.md-text.content+.related-wrap
+  margin-top: 0
+
+.related-posts
+  max-width: 100%
+  margin: 1rem 0
+  .item
+    line-height: 1.2
+    display: block
+    border-left: 0
+    margin-top: 1rem
+    .title
+      color: var(--text-p1)
+      font-weight: 500
+      --fsp: $fsp1
+      font-size: var(--fsp)
+      trans2 color border
+      position: relative
+      padding-bottom: 2px
+      border-bottom: 1px dashed var(--text-meta)
+      line-height: 1.6
+    .excerpt
+      color: var(--text-p3)
+      --fsp: $fsp3
+      font-size: var(--fsp)
+      margin-top: 0.5rem
+      display: -webkit-box
+      -webkit-box-orient: vertical
+      overflow: hidden
+      -webkit-line-clamp: 2
+    &.active
+      .title
+        border-bottom: 1px dashed var(--theme)
+    &:hover
+      .title
+        color: var(--accent)
+        border-bottom: 1px solid var(--accent)
+
+
+.related-wrap#read-next
+  .body
+    display: grid
+    grid-gap: 16px
+    grid-template-columns: repeat(auto-fill, "calc((100% - 1 * %s) / 2)" % 16px)
+    .item  
+      border-top: 1px dashed var(--block-border)
+      border-bottom: 1px dashed var(--block-border)
+      padding: 1rem 0
+    .note
+      margin-bottom: 0.75rem
+      font-size: $fs-13
+      color: var(--text-p4)
+      font-weight: 500
+    a
+      margin: 0
+      line-height: 1.2
+      color: var(--text-p1)
+      font-size: $fsh5
+      &:hover
+        color: var(--accent) !important
+    #next
+      text-align: right
+.wiki+.related-wrap#read-next
+  .item
+    a
+      font-size: $fsh3
+    &#prev a
+      color: var(--text-p3)
+
+
+.related-wrap#comments
+  padding: 0 1rem
+  .cmt-title
+    p
+      margin: 0
+      font-size: inherit
+      a
+        --link: var(--theme)
+        --link-a20: x-theme-alpha(0.2)
+  .cmt-body
+    min-height: 150px
+    position: relative
+    svg.loading
+      top: 60px
+    iframe
+      border-radius: 4px
+      border: none
+      width: 100%

@@ -1,0 +1,36 @@
+<%
+function layoutDiv() {
+  var el = '';
+  if (item.api == undefined) {
+    return el;
+  }
+  el += `<widget class="widget-wrapper${scrollreveal(' ')} timeline">`
+    if (item.title) {
+      el += '<div class="widget-header dis-select">';
+      el += '<span class="name">' + item.title + '</span>';
+      el += '</div>';
+    }
+    el += '<div class="widget-body fs14">';
+      el += `<div class="tag-plugin timeline data-service ds-${(item.type || 'timeline')}"`;
+      // 动态遍历所有属性
+      const excludeKeys = ['title', 'type']; // 已用于其他用途的属性
+      const dataKeys = ['api']; // 需要添加 data- 前缀的属性
+      
+      Object.keys(item).forEach(key => {
+        if (excludeKeys.includes(key) || !item[key]) {
+          return;
+        }
+        if (dataKeys.includes(key)) {
+          el += ' data-' + key + '="' + item[key] + '"';
+        } else {
+          el += ' ' + key + '="' + item[key] + '"';
+        }
+      });
+      el += '>';
+      el += '</div>';
+    el += '</div>';
+  el += '</widget>';
+  return el;
+}
+%>
+<%- layoutDiv() %>

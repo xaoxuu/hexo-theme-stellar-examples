@@ -1,0 +1,49 @@
+.widget-wrapper.timeline
+  .tag-plugin.timeline
+    padding-left: 0
+    &:before
+      left: 6px
+  .widget-body
+    overflow hidden
+  .body
+    a
+      trans1 all
+      word-break: break-all
+      --fsp: $fsp2
+  .tag-plugin.timeline .timenode
+    z-index 1
+    margin-top: 0.25rem
+    .header
+      margin: 0.25rem var(--gap-padding)
+      .user-info
+        background: none
+        padding-right: 0
+      img
+        display: none
+
+    .header:before
+      left: calc(6px - var(--gap-padding))
+    .body
+      border-radius: $border-card-s
+      padding: 0.5rem 1rem
+      p,li
+        --fsp: $fsp3
+      code 
+        background: none
+        padding: 0
+        margin: 0
+      .highlight, pre:not([class]):has(>code)
+        background: var(--bg-a50)
+      
+      
+  .tag-plugin.timeline[data-api] .body .footer
+    background: none
+
+.l_left .widget-wrapper.timeline
+  .tag-plugin.timeline
+    padding-left: 0
+    &:before
+      content: none
+.l_left .widget-wrapper.timeline .body
+  box-shadow: none
+  background: var(--bg-a50)

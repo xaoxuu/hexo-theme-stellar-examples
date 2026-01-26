@@ -1,0 +1,27 @@
+.widget-wrapper.post-list .widget-body
+  a
+    font-size: $fs-14
+    padding: 6px 16px
+    display: block
+    border-radius: $border-bar
+    color: var(--text-p1)
+    trans1 background
+    &.active,&:hover
+      background: var(--bg-a100)
+  a+a
+    margin-top: 2px
+  a  
+    display: flex
+    justify-content: space-between
+    align-items: center
+    .title
+      txt-ellipsis()
+    svg
+      flex-shrink: 0
+      height: 1em
+      width: auto
+      transform: scale(1.2)
+
+.widget-wrapper.post-list
+  .widget-body+.widget-header
+    margin-top: 28px

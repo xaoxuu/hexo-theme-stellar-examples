@@ -1,0 +1,41 @@
+<%
+if (page.menu_id == undefined) {
+  page.menu_id = 'post';
+}
+if (page.title && page.wiki) {
+  page.robots = 'noindex,follow';
+}
+
+function layout_post_card(layout, post, content) {
+  var el = '';
+  var layout = layout;
+  if (layout == 'post' && post.cover != undefined && post.poster != undefined) {
+    layout += ' photo';
+  }
+  el += `<div class="post-card-wrap${scrollreveal(' ')}">`;
+  el += `<a class="post-card ${layout}" href="${pretty_url(post.link || post.path)}">`
+  el += content;
+  el += '</a>';
+  el += '</div>';
+  return el;
+}
+
+function layout_post_list(partial) {
+  var el = '';
+  el += `<div class="post-list post">`;
+  page.posts.each(function(post){
+    if (post.indexing != false) {
+      el += layout_post_card('post', post, partial(post));
+    }
+  })
+  el += '</div>';
+  return el;
+}
+
+%>
+
+<%- partial('_partial/main/navbar/nav_tabs_blog') %>
+<%- layout_post_list(function(post){
+  return partial('_partial/main/post_list/post_card', {post: post})
+}) %>
+<%- partial('_partial/main/post_list/paginator') %>

@@ -1,0 +1,118 @@
+.article-footer
+  margin: 2rem 1rem 1rem
+  padding: 1rem
+  background: var(--block)
+  border-radius: $border-card-l
+  border: 1px solid var(--block-border)
+  font-size: $fs-15
+  line-height: 1.6
+  color: var(--text-p1)
+  &:empty
+    display: none
+  .header
+    font-weight: 500
+    font-size: $fsh5
+  .body
+    --fsp: $fsp2
+    >.link
+      margin: 0
+      height: 0
+      opacity 0
+    p
+      color: var(--text-p2)
+      margin: 0.5rem 0
+      a
+        font-weight: unset
+    ul
+      margin: 0
+      overflow: hidden
+      padding-left: 1rem
+      li
+        font-size: var(--fsp)
+    .post-title
+      margin: 0
+      line-height: 1.2
+      word-break: break-all
+      p
+        --fsp: $fsp2
+  section+section
+    margin-top: 1rem
+    padding-top: 1rem
+    border-top: 1px solid var(--block-border)
+
+.article-footer #contributors
+  .header
+    display: flex
+    justify-content: space-between
+    a.edit
+      font-size: $fs-14
+      display: flex
+      align-items: center
+      color: inherit
+      background: var(--block)
+      padding: 0 .5rem
+      border-radius: $border-button
+      svg
+        width 1.2em
+        height: 1.2em
+        margin-right: 4px
+        color: var(--text-p4)
+        trans1 color
+      span
+        line-height: 1.5
+        trans1 color
+      trans1 background
+      &:hover
+        color: var(--theme)
+        background: var(--theme-a20)
+        svg
+          color: var(--theme)
+  .body
+    .loading-wrap
+      margin-top: 4px
+      padding: 0
+      height: 84px
+    .users-wrap .grid-box
+      margin-top: 4px
+      grid-template-columns: repeat(auto-fill, minmax(72px, 1fr))
+      grid-gap: 4px
+      &:empty
+        display: none
+    .users-wrap .user-card .card-link
+      background: var(--block)
+      trans1 all
+      &:hover
+        background: var(--theme-a20)
+        color: var(--theme)
+      img
+        width 32px
+        height: 32px
+
+.article-footer .social-wrap
+  grid-gap: 0.5rem 2rem
+  margin: 1rem 0 0.5rem
+  grid-template-columns: repeat(auto-fill, 20px);
+  a.social
+    background: none
+    border-radius: 4px
+    padding: 0
+
+.article-footer .qrcode
+  width: 128px
+  padding: 4px
+  background: white
+  border-radius: 4px
+  box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.1), 0 0 32px 0px rgba(0, 0, 0, 0.1)
+  overflow: hidden
+  trans1 all
+  height: 0
+  margin: 0 auto
+  transform: scale(0.01)
+  img
+    object-fit: contain
+
+.article-footer .qrcode.display
+  margin: 2rem auto 1rem
+  height: 128px !important
+  opacity: 1 !important
+  transform: scale(1)

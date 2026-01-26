@@ -1,0 +1,70 @@
+btn:
+  home: Home
+  blog: Blog
+  wiki: Wiki
+  topic: Topic
+  notebook: Notebook
+  recent_publish: Recent
+  all_wiki: All Products
+  category: Category
+  categories: Categories
+  tag: Tag
+  tags: Tags
+  archives: Archives
+  all_posts: All Posts
+  getting_started: Getting Started
+  edit: Edit This Page
+  top: Scroll to Top
+  comments: Join Discussion
+
+meta:
+  recent_update: Recent Update
+  tag_tree: Tags
+  all_notes: All Notes
+  toc: On This Page
+  read_next: READ NEXT
+  prev: Prev
+  next: Next
+  older: Older
+  newer: Newer
+  references: References
+  related_posts: Related Posts
+  back_to_top: Back to top
+  more: More
+  created_author: '%s posted on'
+  created: 'Posted on'
+  updated: 'Updated on'
+  license: License
+  share: Share
+  contributors: Page Contributors
+  date_suffix:
+    just: Just
+    min: minutes ago
+    hour: hours ago
+    day: days ago
+    month: months ago
+
+page:
+  error:
+    what: Page Not Found
+    why: The address may be entered incorrectly or the address has been deleted.
+    action: Back to Home
+
+search:
+  search: Search
+  search_in: Search in %s
+  no_results: No Results!
+
+message:
+  copied: Copied!
+  theme_switched:
+    light: Switched to Light Mode
+    dark: Switched to Dark Mode
+    auto: Switched to Auto Mode
+
+symbol:
+  comma: ", "
+  period: ". "
+  colon: ": "
+  brackets_l: "("
+  brackets_r: ")"

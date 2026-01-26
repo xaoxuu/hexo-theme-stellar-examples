@@ -1,0 +1,138 @@
+.l_body[type=story] .md-text.content
+  --fsp: 'calc(%s + 1px)' % $fs-body
+  --gap-p: 2rem
+  >div.tag-plugin,>p>img
+    margin-top: 2.4rem
+    margin-bottom: 2.4rem
+  // 段落标题
+  h1,h2,h3,h4,h5,h6
+    color: var(--text)
+    line-height: 1.2
+    >a:first-child
+      background: var(--theme)
+      border-radius: 2px
+      margin-right: 8px
+      padding: 0 2px
+      trans1 all
+      &:hover
+        background: var(--accent)
+      &:before,&:after
+        color: white
+        font-weight: 700
+      &:before
+        content: ''
+        font-size: 0.5em
+      &:after
+        font-size: 0.25em
+  h2:not([class])
+    &:before,&:after
+      content: ''
+      display: inline-block
+      width: 12px
+      height: 1.2em
+      background: $c-accent
+      transform: skewX(-20deg)
+      margin: 0 0.5em
+      vertical-align: top
+      position: relative
+
+  h3:not([class])
+    position: relative
+    &:before,&:after
+      position absolute
+      font-size: 1.2em
+      background-color: x-theme-alpha(0.5)
+      width: 1em
+      height: 1em
+      content: ''
+      opacity 1
+      display: inline-block
+      trans1 all
+      vertical-align: middle
+    &:before
+      margin-left: -1em
+      svg-mask-icon($iH3Left)
+    &:after
+      svg-mask-icon($iH3Right)
+
+  h4:not([class])
+    position: relative
+    &:before
+      content: ''
+      position: absolute
+      width: 32px
+      height: 32px
+      margin-left: -16px
+      margin-top: -12px
+      background: x-theme-alpha(0.3)
+      border-radius: 50%
+      --blur-px: 8px
+      filter: blur(var(--blur-px))
+      pointer-events: none
+      z-index: -1
+      trans1 all 0.5s
+    &:hover:before
+      --blur-px: 24px
+      background: x-theme-alpha(1)
+
+  ol,ul
+    margin-left: 'calc(%s * 2)' % var(--fsp)
+  h1,h2,h3,h4,h5,h6
+    text-align: center
+    margin: 2em 0 1.5em
+    >a:first-child
+      display: none
+
+  // 取消缩进效果
+  .poetry, .okr, .timeline, li, .article-footer
+    p:not([class])
+      text-indent: 0
+      text-align: convert(hexo-config('style.text-align'))
+
+  p>img, .tag-plugin.image .image-bg
+    border-radius: $border-image-l
+    >img
+      border-radius: $border-image-l
+
+
+.l_body[type=story] .md-text.content>blockquote, .md-text.content .tag-plugin.blockquote
+  text-align: center
+  --inset: calc(var(--fsp) * 2)
+  margin-left: var(--inset)
+  margin-right: var(--inset)
+  background: var(--block)
+  padding: 1rem 2rem
+  border-radius: $border-card
+  &:before,&:after
+    position: absolute
+    font-size: 2rem
+    background-color: x-theme-alpha(0.25)
+    top: -0.3em
+    width: 1em
+    height: 1em
+    content: ''
+    opacity 1
+    trans1 all
+  &:before
+    left: -0.3em
+    svg-mask-icon($iQuoteLeft)
+  &:after
+    right: -0.3em
+    svg-mask-icon($iQuoteRight)
+  p:not([class])
+    color: var(--text-p2)
+    font-size: $fs-body
+    text-indent: 2em
+  &:hover
+    &:before,&:after
+      background-color: x-theme-alpha(0.5)
+
+
+.l_body[type=story] .article.banner .content .bottom.only-title
+  justify-content: center
+
+
+.l_body[text-indent] .tag-plugin.tabs .tab-content .tab-pane>p:not([class])
+  text-indent: 'calc(%s * 2)' % var(--fsp)
+  a
+    text-indent: 0

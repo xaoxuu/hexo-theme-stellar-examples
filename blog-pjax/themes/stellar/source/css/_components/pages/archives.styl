@@ -1,0 +1,106 @@
+.post-list #archive
+  padding: 1rem
+  .archive-header
+    display: inline-block
+    font-family: $ff-code
+    font-weight: 700
+    line-height: 1.2
+    margin-bottom: .5em
+    position: relative
+    padding: 4px 0
+    color: var(--text-p1)
+    &:after
+      content: ""
+      position: absolute
+      height: 4px
+      bottom: 0
+      left: 0
+      right: 0
+      z-index: -1
+      border-radius: 4px
+      background: var(--theme)
+  a.post
+    display: inline-flex
+    align-items: baseline
+    margin: 0.25rem 0
+    color: var(--text-p1)
+    trans2 color border
+    border-bottom: 1px dashed var(--text-meta)
+    time
+      font-family: $ff-code
+      margin-right: 1em
+      font-weight: 700
+      flex-shrink: 0
+      color: var(--text-p4)
+    &:hover
+      border-bottom: 1px solid var(--theme)
+      color: var(--text)
+      time
+        color: var(--theme)
+
+
+
+.post-list #cats
+  padding: 0
+  a.cat
+    display: flex
+    &.child
+      padding-left: 2rem
+    padding: .5em 1rem
+    border-radius: $border-bar
+    color: var(--text-p2)
+    align-items: center
+    justify-content: space-between
+    font-weight: 500
+    font-size: $fsp2
+    span
+      display: flex
+      align-items: center
+    svg
+      height: 1em
+      width: auto
+      transform: scale(1.2)
+      margin-right: 8px
+    .badge
+      font-weight: 700
+      font-family: $ff-code
+      opacity: .5
+      font-size: $fs-12
+    &:hover
+      background: var(--block-border)
+      color: var(--text)
+      .badge
+        opacity: 1
+        color: var(--theme)
+
+.post-list #tags
+  display: flex
+  flex-wrap: wrap
+  padding: 0
+  margin: 0 -4px
+  a.tag
+    display: inline-flex
+    align-items: center
+    position: relative
+    color: var(--text-p2)
+    margin: 4px
+    padding: .5em .75rem
+    border-radius: 4px
+    background: var(--block)
+    font-size: $fs-13
+    font-weight: 500
+    &:before
+      content: "#"
+      margin-left: -2px
+      margin-right: 2px
+      opacity: .4
+    &:hover
+      &:before
+        color var(--theme)
+        opacity: 1
+      color: var(--text)
+      background: var(--block-border)
+
+@media screen and (min-width: $device-mobile)
+  .post-list.author #archive
+    padding: 1rem 0

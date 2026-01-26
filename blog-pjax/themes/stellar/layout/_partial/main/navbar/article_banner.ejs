@@ -1,0 +1,127 @@
+<%
+
+var banner = {}
+
+if (page.banner) {
+  banner.url = page.banner
+} else if (theme.topic.tree[page.topic]?.banner != null) {
+  banner.url = theme.topic.tree[page.topic]?.banner
+} else if (theme.wiki.tree[page.wiki]?.banner != null) {
+  banner.url = theme.wiki.tree[page.wiki]?.banner
+}
+banner = Object.assign(banner, page.banner_info)
+// 标题
+if (banner.title == null) {
+  banner.title = page.h1 != null ? page.h1 : page.title
+}
+// 副标题
+if (banner.subtitle == null) {
+  banner.subtitle = page.subtitle
+}
+
+function layoutBreadcrumb() {
+  if (page.breadcrumb === false) {
+    return `<div class="top"></div>`
+  }
+  var el = ''
+  // 1.main
+  el += `<div class="top bread-nav footnote">`
+  // 2.left
+  el += `<div class="left">`
+  // 3.left.top: 面包屑导航
+  el += `<div class="flex-row" id="breadcrumb">`
+    // 首页
+    el += `<a class="cap breadcrumb" href="${pretty_url(config.root)}">${__("btn.home")}</a>`
+    if (theme.wiki.tree[page.wiki]) {
+      el += partial('breadcrumb/wiki')
+    } else if (page.notebook) {
+      el += partial('breadcrumb/note')
+    } else if (page.layout == 'post') {
+      el += partial('breadcrumb/blog')
+    } else {
+      el += partial('breadcrumb/page')
+    }
+  // end 3.left.top
+  el += `</div>`
+  // 3.left.bottom
+  el += partial('dateinfo')
+  // end 2.left
+  el += `</div>`
+  // end 1.main
+  el += `</div>`
+  return el
+}
+
+function layoutTitle() {
+  if (banner.title?.length > 0) {
+    return `<h1 class="text title"><span>${banner.title}</span></h1>`
+  } else {
+    return ''
+  }
+}
+
+function layoutSubtitle() {
+  if (banner.subtitle?.length > 0) {
+    return `<div class="text subtitle">${banner.subtitle}</div>`
+  } else {
+    return ''
+  }
+}
+
+function layoutIcon() {
+  if (banner.avatar?.length > 0 || banner.icon?.length > 0) {
+    return `<img class="lazy avatar" data-src="${banner.avatar || banner.icon}">`
+  } else {
+    return ''
+  }
+}
+
+function layoutBottom() {
+  const el_icon = layoutIcon()
+  const el_title = layoutTitle()
+  const el_subtitle = layoutSubtitle()
+  var cls = ''
+  if (el_title.length > 0 && el_subtitle.length == 0) {
+    cls += ' only-title'
+  }
+  if (el_title.length > 0) {
+    return `
+    <div class="bottom${cls}">
+      ${el_icon}
+      <div class="text-area">
+        ${el_title}
+        ${el_subtitle}
+      </div>
+    </div>
+    `
+  } else {
+    return ``
+  }
+}
+
+function layoutDiv() {
+  const bottom = layoutBottom()
+  if (page.breadcrumb === false && bottom.length == 0) {
+    return ``
+  }
+  const top = layoutBreadcrumb()
+  var style = ``
+  var el = ``
+  el += `<div class="article banner${scrollreveal(' ')} top">`
+  if (banner.url?.length > 0) {
+    el += `<img class="lazy bg" data-src="${banner.url}">`
+    if (banner.color) {
+      style += ' style="--text-banner:' + banner.color + '"'
+    }
+  }
+  el += `
+  <div class="content"${style}>
+    ${top}
+    ${bottom}
+  </div>
+  `
+  el += `</div>`
+  return el
+}
+%>
+<%- layoutDiv() %>

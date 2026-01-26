@@ -1,0 +1,4 @@
+.github/
+npm-publish.sh
+node_modules
+giscus.json

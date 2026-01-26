@@ -1,0 +1,39 @@
+.tag-plugin.ds-rating
+  text-align: center
+.tag-plugin.ds-rating .header
+  margin: .5rem
+  font-weight: 500
+  color: var(--text)
+.tag-plugin.ds-rating .body
+  display: flex
+  align-items: center
+  justify-content: center
+  button
+    color: var(--text-p1)
+    font-size: 1rem
+    padding: 0
+    border-radius: $border-button
+    display: flex
+    svg
+      font-size: 1.5em
+      margin: 4px
+    img
+      margin: 4px
+    trans1 all
+    color: var(--theme)
+    opacity: 0.2
+    &:hover,&.hover,&.preview
+      opacity: 1
+  span
+    line-height: 1
+    font-size: 1em
+    margin: 4px
+
+.tag-plugin.ds-rating .footer
+  margin: .5rem
+  color: var(--text-p3)
+  font-weight: 500
+  font-size: $fs-12
+
+.tag-plugin.ds-rating.rated
+  pointer-events: none

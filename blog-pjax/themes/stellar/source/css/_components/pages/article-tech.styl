@@ -1,0 +1,35 @@
+.l_body[type='tech'] article.content
+  h1,h2,h3,h4,h5,h6
+    color: var(--text)
+    line-height: 1.8
+    >a:first-child
+      background: var(--theme)
+      border-radius: 2px
+      margin-right: 8px
+      padding: 0 2px
+      trans1 all
+      &:hover
+        background: var(--accent)
+      &:before,&:after
+        color: white
+        font-weight: 700
+      &:before
+        content: ''
+        font-size: 0.5em
+      &:after
+        font-size: 0.25em
+  h2
+    font-weight: 500
+    >a:first-child
+      &:before
+        content: hexo-config('style.header_prefix.h2')
+  h3
+    >a:first-child:before
+      content: hexo-config('style.header_prefix.h3')
+  h4
+    >a:first-child:before
+      content: hexo-config('style.header_prefix.h4')
+  h5
+    >a:first-child:before
+      content: hexo-config('style.header_prefix.h5')
+    

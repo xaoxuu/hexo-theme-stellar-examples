@@ -1,0 +1,23 @@
+<%
+function layoutDiv() {
+  var el = '';
+  el += '<article class="md-text">';
+  el += `<div class="preview"><img src="${proj.icon ? proj.icon : theme.default.project}"/></div>`
+  el += '<div class="excerpt">';
+  if (proj.tags && proj.tags.length > 0) {
+    el += '<div class="caps">';
+      for (let tag of proj.tags) {
+        el += '<span class="cap breadcrumb"' + category_color(tag) + '>' + tag + '</span>';
+      }
+    el += '</div>';
+  }
+  el += '<h2 class="post-title">' + (proj.title || proj.name) + '</h2>';
+  if (proj.description) {
+    el += '<p>' + proj.description + '</p>';
+  }
+  el += '</div>';
+  el += '</article>';
+  return el;
+}
+%>
+<%- layoutDiv() %>

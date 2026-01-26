@@ -1,0 +1,36 @@
+<%
+
+function custom_inject() {
+  var el = '';
+  for (let item of (config.inject?.script || [])) {
+    el += item;
+  }
+  for (let item of (theme.inject?.script || [])) {
+    el += item;
+  }
+  for (let item of (page.inject?.script || [])) {
+    el += item;
+  }
+  return el;
+}
+
+%>
+<%- partial('scripts/defines') %>
+<%- partial('scripts/utils') %>
+<%- partial('scripts/sidebar') %>
+<%- partial('scripts/tagtree') %>
+<%- partial('scripts/lazyload') %>
+
+<!-- required -->
+<script src="<%- url_for(`${theme.stellar.main_js}?v=${stellar_info('version')}`) %>" defer></script>
+
+<%- partial('scripts/theme') %>
+
+<!-- optional -->
+<%- partial('comments/script') %>
+
+<%- partial('scripts/services') %>
+<%- partial('../_plugins/index') %>
+
+<!-- inject -->
+<%- custom_inject() %>

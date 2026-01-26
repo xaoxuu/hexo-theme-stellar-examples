@@ -1,0 +1,19 @@
+<%
+function layoutDiv() {
+  var el = '';
+  el += '<div id="twikoo_container"';
+  let cfg = {};
+  if (page.comment_id) {
+    cfg['comment_id'] = page.comment_id;
+  }
+  for (let key of Object.keys(cfg)) {
+    if (cfg[key]) {
+      el += ' ' + key + '="' + cfg[key] + '"';
+    }
+  }
+  el += `>${icon('default:loading')}</div>`
+  return el;
+}
+%>
+
+<%- layoutDiv() %>

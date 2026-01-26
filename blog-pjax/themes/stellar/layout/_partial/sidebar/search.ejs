@@ -1,0 +1,54 @@
+<%
+const notebook = theme.notebooks.tree[page.notebook]
+if (item.filter == null) {
+  item.filter = 'auto'
+}
+if (item.placeholder == null && item.filter == 'auto') {
+  if (theme.wiki.tree[page.wiki]?.name) {
+    item.placeholder = __('search.search_in', theme.wiki.tree[page.wiki]?.name) 
+  } else if (notebook) {
+    item.placeholder = __('search.search_in', notebook.name || __('btn.notebook'))
+    item.filter = notebook.base_dir
+  }
+}
+function layoutDiv() {
+  var el = ''
+  if (page.search == false) {
+    return el
+  }
+  el += `<div class="search-wrapper" id="search-wrapper">`
+  el += `<form class="search-form">`
+  var filter = ''
+  if (item.filter == 'auto') {
+    if (page.wiki) {
+      let matches = page.path.match(/(.*?)\/(.*?)\//i)
+      if (matches?.length > 0) {
+        filter = matches[0]
+      }
+    }
+  } else {
+    if (item.filter?.length > 0) {
+      filter = item.filter
+    }
+  }
+  el += `<a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();">`
+  el += icon('default:search')
+  el += `</a>`
+  el += `<input type="text" class="search-input" id="search-input"`
+  if (filter.length > 0) {
+    if (!filter.startsWith('/')) {
+      filter = '/' + filter
+    }
+    el += ` data-filter="${filter}"`
+    el += ` placeholder="${item.placeholder || __('search.search_in', filter)}">`
+  } else {
+    el += ` placeholder="${item.placeholder || __('search.search')}">`
+  }
+  el += `</form>`
+  el += `<div id="search-result"></div>`
+  el += `<div class="search-no-result">${__('search.no_results')}</div>`
+  el += `</div>`
+  return el
+}
+%>
+<%- layoutDiv() %>
