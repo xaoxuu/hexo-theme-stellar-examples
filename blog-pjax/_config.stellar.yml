@@ -24,7 +24,7 @@ menubar:
       icon: solar:documents-bold-duotone
       title: 博客
       url: /
-    - id: topic
+    - id: wiki
       theme: '#3DC550'
       icon: solar:notebook-bookmark-bold-duotone
       title: 项目
