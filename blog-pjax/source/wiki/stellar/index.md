@@ -1,17 +1,11 @@
 ---
 wiki: hexo-stellar
 title: 开始您全新的博客之旅
-sidebar: 
-  - toc
-  - timeline_stellar_releases
-  - ghissues
-  - timeline_stellar_more
-  - related
 ---
 
 Stellar 是一个内置文档系统的简约商务风 Hexo 主题，支持丰富的标签和动态数据组件，帮助您简单从容地应对各种表达需求，十分推荐内容创作者使用 Stellar 开始您全新的博客之旅。
 
-{% folding 了解 Stellar 的设计理念 %}
+{% folding 了解 Stellar 如何在混乱中建立秩序 %}
 
 **“真正的简约远不止删繁就简，而是在纷繁中建立秩序。”**
 
@@ -51,10 +45,10 @@ Stellar 是一个内置文档系统的简约商务风 Hexo 主题，支持丰富
 此外，如果您从旧版本更新或者其它主题迁移，请确保环境版本不要太低，否则会产生兼容性问题：
 
 ```yaml 建议的版本
-Hexo: 6.3.0 ~ 7.0.0
+Hexo: 6.3.0 ~ latest
 hexo-cli: 4.3.0 ~ latest
-node: 14.17.3 ～ 20.10.0 # 建议选择 LTS 版本，过高的版本 hexo 还没有进行兼容。
-npm: 6.14.13 ~ 10.2.3
+node: 14.17.3 ～ latest LTS # 建议选择 LTS 版本，过高的版本 hexo 还没有进行兼容。
+npm: 6.14.13 ~ latest
 ```
 
 ## 安装与更新
@@ -66,7 +60,7 @@ npm: 6.14.13 ~ 10.2.3
 
 **安装方法**
 
-1. 在终端中输入：
+1. 打开终端并进入博客文件夹，执行：
 {% copy npm i hexo-theme-stellar %}
 
 2. 在 `blog/_config.yml` 文件中找到并修改：
@@ -74,8 +68,8 @@ npm: 6.14.13 ~ 10.2.3
 
 **更新方法**
 
-1. 在 package.json 中修改 stellar 的版本号，然后执行：
-{% copy npm i %}
+1. 打开终端并进入博客文件夹，执行：
+{% copy npm i hexo-theme-stellar %}
 
 2. 阅读 [更新日志](https://github.com/xaoxuu/hexo-theme-stellar/releases) 进行迁移操作。
 
@@ -134,17 +128,19 @@ npm: 6.14.13 ~ 10.2.3
 
 {% toc wiki:Stellar 文档目录 display:mobile %}
 
-## Star History
+## 关于 Stellar 
 
-本项目永久开源免费，如果您喜欢本项目，请[点个赞](https://github.com/xaoxuu/hexo-theme-stellar/)支持一下吧～
+### Star History
+
+本项目永久开源免费，如果您喜欢本项目，请 [点个赞](https://github.com/xaoxuu/hexo-theme-stellar/) 支持一下吧～
 
 {% image https://starchart.cc/xaoxuu/hexo-theme-stellar.svg  ratio:1024/400 %}
 
-## 开源许可协议
+### 开源许可协议
 
 {% quot 项目中的许可声明文件应包含在所有副本中 %}
 
-本项目是由 [@xaoxuu](https://github.com/xaoxuu) 设计和开发，后期也合并了 [开源贡献者](/wiki/stellar/contributors/) 提交的代码，使用 [MIT License](https://raw.github.xaox.cc/xaoxuu/hexo-theme-stellar/main/LICENSE) 开源许可协议进行授权，拷贝、分享或基于此进行创作时请遵守协议内容：
+本项目是由 [@xaoxuu](https://github.com/xaoxuu) 设计和开发，后期也合并了 [开源贡献者](https://xaoxuu.com/wiki/stellar/contributors.html) 提交的代码，使用 [MIT License](https://raw.github.xaox.cc/xaoxuu/hexo-theme-stellar/main/LICENSE) 开源许可协议进行授权，拷贝、分享或基于此进行创作时请遵守协议内容：
 
 ```license
 MIT License
@@ -169,3 +165,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## 探索 Stellar
+
+{% box 这里展示最新3篇探索号投稿文章 %}
+
+{% timeline hide:title,footer api:https://api.github.xaox.cc/repos/xaoxuu/hexo-theme-stellar/issues?state=all&labels=分享&per_page=3 %}
+{% endtimeline %}
+
+{% navbar [更多文章](https://xaoxuu.com/wiki/stellar/articles.html) [投稿](https://github.com/xaoxuu/hexo-theme-stellar/issues/new?template=article-share.md) %}
+
+{% endbox %}

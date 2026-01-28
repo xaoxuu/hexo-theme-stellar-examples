@@ -4,7 +4,7 @@ subtitle: '每个人的独立博客 | Designed by xaoxuu'
 tags: [开源项目]
 icon: /assets/icon.svg
 cover: /assets/icon.svg
-# coverpage: true
+coverpage: true
 description: Stellar 是一个内置文档系统的简约商务风 Hexo 主题，支持丰富的标签和动态数据组件。
 repo: xaoxuu/hexo-theme-stellar
 search:
@@ -28,6 +28,8 @@ tree:
   '快速开始':
     - index
     - releases
-  '社区':
     - examples
+  '社区支持':
     - articles
+    - todo
+    - contributors
