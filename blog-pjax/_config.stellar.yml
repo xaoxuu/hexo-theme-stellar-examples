@@ -66,3 +66,7 @@ style:
     body: '"LXGW WenKai Screen", system-ui, "Microsoft Yahei", "Segoe UI", -apple-system, Roboto, Ubuntu, "Helvetica Neue", Arial, "WenQuanYi Micro Hei", sans-serif'
     code: '"LXGW WenKai Screen", Menlo, Monaco, Consolas, system-ui, "Courier New", monospace, sans-serif'
     codeblock: 'Menlo, Monaco, Consolas, system-ui, "Courier New", monospace, sans-serif'
+
+plugins:
+  pjax:
+    enable: true
