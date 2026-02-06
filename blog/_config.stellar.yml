@@ -27,8 +27,8 @@ menubar:
     - id: topic
       theme: '#3DC550'
       icon: solar:notebook-bookmark-bold-duotone
-      title: 专栏
-      url: /topic/
+      title: 项目
+      url: /wiki/
     - id: explore
       theme: '#FA6400'
       icon: solar:planet-bold-duotone
