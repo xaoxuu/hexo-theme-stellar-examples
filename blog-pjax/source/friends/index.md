@@ -3,7 +3,8 @@ robots: noindex,nofollow
 sitemap: false
 menu_id: social
 header: false
-sidebar: [sociallist, welcome, recent]
+leftbar: sociallist, welcome, recent
+rightbar: ghuser, welcome, note_202209
 title: 友链
 h1: ''
 breadcrumb: false

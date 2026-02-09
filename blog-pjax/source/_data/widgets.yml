@@ -32,3 +32,7 @@ sociallist:
     - icon: solar:chat-line-bold-duotone
       title: 关于本站 & 留言板
       url: /about/
+
+ghuser:
+  username: xaoxuu
+  avatar: false
