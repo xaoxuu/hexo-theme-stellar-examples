@@ -1,0 +1,6 @@
+title: 项目文档
+description: 单项目 Wiki 文档站
+theme: stellar
+url: https://xaoxuu.github.io/hexo-theme-stellar-examples/docs
+root: /hexo-theme-stellar-examples/docs/
+permalink: pages/:title/

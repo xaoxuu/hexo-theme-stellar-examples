@@ -1,0 +1,18 @@
+name: Stellar 建站手册
+headline: 从第一篇文章到发布
+tagline: 用一个真实站点串起内容、导航与发布
+description: 学习如何在 Stellar 站点中组织博客与 Wiki、维护阅读入口，并完成一次可重复的发布前检查。
+tags:
+  - 知识库
+  - 建站实践
+audience: 独立博主与文档维护者
+route:
+  path: /wiki/site-handbook/
+navigation:
+  tree:
+    开始建站:
+      - index
+      - content
+    导航与发布:
+      - navigation
+      - publishing

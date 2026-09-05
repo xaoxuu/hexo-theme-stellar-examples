@@ -1,0 +1,11 @@
+title: 留白
+description: 单栏极简风博客
+theme: stellar
+url: https://xaoxuu.github.io/hexo-theme-stellar-examples/lightblog
+root: /hexo-theme-stellar-examples/lightblog/
+permalink: posts/:title/
+
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date

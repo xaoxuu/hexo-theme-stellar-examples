@@ -1,5 +1,9 @@
 .DS_Store
-node_modules
+.cache/
+_multiconfig.yml
 db.json
-.deploy_git
-public
+node_modules/
+public/
+dist/
+release/
+*.log

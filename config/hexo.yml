@@ -1,0 +1,46 @@
+subtitle: 使用 Stellar 构建的真实场景
+description: Stellar v2 Blueprint 示例与长期验收站点
+keywords:
+  - Hexo
+  - Stellar
+author: 示例作者
+language: zh-CN
+timezone: Asia/Shanghai
+
+source_dir: source
+public_dir: public
+code_dir: downloads/code
+skip_render: []
+
+new_post_name: :title.md
+default_layout: post
+titlecase: false
+external_link:
+  enable: true
+  field: site
+  exclude: ''
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+
+syntax_highlighter: highlight.js
+highlight:
+  line_number: true
+  auto_detect: false
+  tab_replace: ''
+  wrap: true
+  hljs: false
+
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+updated_option: date
+per_page: 10
+pagination_dir: page
+
+meta_generator: true
+theme: stellar
+
+deploy:
+  type: ''

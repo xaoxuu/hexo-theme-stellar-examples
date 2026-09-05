@@ -1,0 +1,62 @@
+leftbar:
+  brand:
+    name: 个人知识库
+    tagline: 记录、连接并重新发现知识
+    image:
+      src: /assets/brand.webp
+  menu:
+    - id: post
+      title: 近期发布
+      icon: default:documents
+      url: /
+      accent: '#1BCDFC'
+    - id: topic
+      title: 专栏
+      icon: default:pin
+      url: /topic/
+      accent: '#F44336'
+    - id: archives
+      title: 文章归档
+      icon: default:calendar
+      url: /archives/
+      accent: '#7C4DFF'
+    - id: wiki
+      title: 知识库
+      icon: default:documents
+      url: /wiki/
+      accent: '#3DC550'
+    - type: search
+footer:
+  sections:
+    - title: 浏览知识库
+      items:
+        - title: 最近文章
+          url: /
+        - title: 知识库目录
+          url: /wiki/
+        - title: 内容归档
+          url: /archives/
+
+profiles:
+  wiki_index:
+    active_menu: wiki
+  notebook_index:
+    active_menu: post
+  note_index:
+    active_menu: post
+  note:
+    active_menu: post
+  topic:
+    active_menu: topic
+
+article:
+  listing:
+    show_tags: true
+  show_reading_time: true
+features:
+  reveal:
+    enabled: true
+  card_hover:
+    enabled: true
+appearance:
+  preset: glass

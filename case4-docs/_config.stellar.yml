@@ -1,0 +1,55 @@
+topbar:
+  brand:
+    name: 项目文档
+    tagline: 从安装到配置的完整使用旅程
+    image:
+      src: /assets/brand.webp
+  menu:
+    - type: search
+    - id: wiki
+      title: 文档
+      icon: default:documents
+      url: /
+      accent: '#1BCDFC'
+
+leftbar:
+  brand:
+    name: 项目文档
+    tagline: 从安装到配置的完整使用旅程
+    image:
+      src: /assets/brand.webp
+  footer:
+    actions:
+    - type: link
+      icon: default:github
+      url: https://github.com/xaoxuu
+      title: GitHub
+
+footer:
+  sections:
+    - title: Stellar
+      items:
+        - title: 文档首页
+          url: /
+        - title: 复刻本站
+          url: /build-this-site/
+
+
+
+
+profiles:
+  wiki_index:
+    path: null
+  wiki:
+    active_menu: wiki
+    topbar:
+      enabled: true
+      widgets:
+        - spacer
+        - menu
+        - settings
+features:
+  reveal:
+    enabled: true
+  card_hover:
+    enabled: true

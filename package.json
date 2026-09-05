@@ -1,0 +1,30 @@
+{
+  "name": "hexo-theme-stellar-examples",
+  "version": "2.0.0-alpha.1",
+  "private": true,
+  "description": "Hexo 8 monorepo for Stellar Blueprint demos and acceptance.",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "case1-lightblog",
+    "case2-blog",
+    "case3-knowledge",
+    "case4-docs"
+  ],
+  "scripts": {
+    "start": "node main.mjs",
+    "start:all": "node scripts/examples.mjs start-all",
+    "artifacts": "node scripts/blueprint-artifacts.mjs build",
+    "clean": "node scripts/examples.mjs clean",
+    "dev": "node scripts/examples.mjs dev",
+    "doctor": "node scripts/examples.mjs doctor",
+    "build": "node scripts/examples.mjs build",
+    "check:structure": "node scripts/examples.mjs check-structure",
+    "check:blueprints": "node scripts/blueprint-artifacts.mjs check",
+    "check:outputs": "node scripts/examples.mjs check-outputs",
+    "check": "npm test && npm run check:blueprints && node scripts/examples.mjs check",
+    "deploy": "node scripts/examples.mjs deploy",
+    "test": "node --test"
+  }
+}

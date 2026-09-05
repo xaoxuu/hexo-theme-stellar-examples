@@ -1,0 +1,54 @@
+name: Check Blueprint CLI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  cli:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Test CLI and local artifacts
+        run: npm test
+
+      - name: Check artifact catalog
+        run: node scripts/blueprint-artifacts.mjs check --skip-lock
+
+      - name: Build bootstrap smoke-test assets
+        run: npm run artifacts
+
+      - name: Smoke-test POSIX bootstrap
+        if: runner.os != 'Windows'
+        run: node scripts/bootstrap-smoke.mjs posix
+
+      - name: Smoke-test PowerShell bootstrap
+        if: runner.os == 'Windows'
+        run: node scripts/bootstrap-smoke.mjs powershell
+
+      - name: Check POSIX bootstrap syntax
+        if: runner.os != 'Windows'
+        run: sh -n install.sh
+
+      - name: Check PowerShell bootstrap syntax
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: '[void][scriptblock]::Create((Get-Content install.ps1 -Raw))'

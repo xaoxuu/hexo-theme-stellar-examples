@@ -1,0 +1,7 @@
+name: 系统化整理
+headline: 从记录到结构
+description: 用连续文章展示如何把零散信息整理成可以回访的知识系统。
+route:
+  start: system-thinking
+article:
+  style: tech

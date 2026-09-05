@@ -1,0 +1,18 @@
+name: 个人知识管理
+headline: 让笔记重新派上用场
+tagline: 从收集、整理到回访的个人知识实践
+description: 围绕真实问题收集材料，将零散记录整理为独立笔记，再通过回访与应用持续更新。
+tags:
+  - 知识库
+  - 学习方法
+audience: 学习者与写作者
+route:
+  path: /wiki/knowledge-management/
+navigation:
+  tree:
+    从这里开始:
+      - index
+      - capture
+    整理与应用:
+      - organize
+      - review

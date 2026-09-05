@@ -1,0 +1,71 @@
+topbar:
+  enabled: true
+  brand:
+    name: 留白
+    tagline: 留一处安静的写作空间
+    image:
+      src: /assets/brand.webp
+  menu:
+    - type: search
+    - id: post
+      title: 阅读
+      icon: default:documents
+      url: /
+      accent: '#73584A'
+  widgets:
+    - spacer
+    - menu
+    - settings
+leftbar:
+  enabled: false
+profiles:
+  post:
+    topbar:
+      widgets:
+        - spacer
+        - menu
+        - settings
+        - toc
+    rightbar:
+      widgets: []
+  wiki_index:
+    active_menu: post
+  wiki:
+    active_menu: post
+    topbar:
+      widgets:
+        - spacer
+        - menu
+        - settings
+        - toc
+    rightbar:
+      widgets: []
+  notebook_index:
+    active_menu: post
+  note_index:
+    active_menu: post
+  note:
+    active_menu: post
+    rightbar:
+      widgets: []
+
+article:
+  style: story
+  paragraph_indent: always
+  listing:
+    pinned_layout: flat
+    card_layout: classic
+  show_reading_time: true
+  footer:
+    show_tags: false
+
+features:
+  reveal:
+    enabled: false
+
+appearance:
+  preset: flat
+  typography:
+    font_family:
+      body: '"Courier New", ui-serif, Georgia, "Times New Roman", serif'
+      code: 'Monaco, Consolas, system-ui, "Courier New", monospace, sans-serif'

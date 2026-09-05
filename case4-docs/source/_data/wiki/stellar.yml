@@ -1,0 +1,55 @@
+name: Stellar
+headline: 每个人的独立博客
+tagline: 基于 Hexo 的全能型个人知识库
+tags:
+  - 博客主题
+audience: 独立博主
+icon: /assets/brand.webp
+cover: https://res.xaox.cc/posts/20260820225153501.png-hd
+hero:
+  enabled: true
+  background:
+    effect:
+      type: galaxy
+      options: {}
+  preview:
+    type: terminal
+    commands:
+      - label: npm
+        codes: |
+          npm i hexo-theme-stellar
+          npx hexo config theme stellar
+      - label: pnpm
+        codes: |
+          pnpm add hexo-theme-stellar
+          pnpm exec hexo config theme stellar
+  actions:
+    - title: 在线演示
+      url: /examples/
+      icon: default:monitor
+description: Stellar 是一个内置文档系统的简约商务风 Hexo 主题，支持丰富的标签和动态数据组件。
+leftbar:
+  brand:
+    image:
+      src: /assets/brand.webp
+source:
+  repository: xaoxuu/hexo-theme-stellar
+route:
+  path: /
+navigation:
+  tree:
+    快速开始:
+      - /
+      - /examples/
+      - /releases/
+    Demo 文档示例:
+      - /build-this-site/
+    写作与维护:
+      - /authoring-guide/
+      - /content-components/
+      - /navigation-guide/
+      - /publishing-checklist/
+    社区支持:
+      - /articles/
+      - /todo/
+      - /contributors/

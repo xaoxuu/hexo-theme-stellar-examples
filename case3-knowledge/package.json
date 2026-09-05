@@ -1,0 +1,20 @@
+{
+  "name": "@stellar-examples/knowledge",
+  "version": "2.0.0-alpha.1",
+  "private": true,
+  "hexo": {
+    "version": "8.1.2"
+  },
+  "dependencies": {
+    "hexo": "8.1.2",
+    "hexo-front-matter": "4.2.1",
+    "hexo-generator-archive": "2.0.0",
+    "hexo-generator-category": "2.0.0",
+    "hexo-generator-index": "4.0.0",
+    "hexo-generator-tag": "2.0.0",
+    "hexo-renderer-marked": "7.0.1",
+    "hexo-server": "3.0.0",
+    "hexo-util": "4.0.0",
+    "hexo-theme-stellar": "https://github.com/xaoxuu/hexo-theme-stellar/archive/9714968ece8ff6e328423dbb40c72b7c5796273d.tar.gz"
+  }
+}
