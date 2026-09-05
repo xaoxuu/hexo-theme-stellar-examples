@@ -1,10 +1,8 @@
-# Stellar 的四种起点
+# Stellar 示例站与 Blueprints
 
 [简体中文](README.md) · [English](README_EN.md)
 
-Stellar 可以只是一个安静的博客，也可以慢慢长成个人知识库。这里放了四个能真正运行的站点，不是只用来截图的空壳。
-
-![Stellar 的轻博客、经典博客、个人知识库和项目文档](https://xaoxuu.com/wiki/stellar/assets/screenshots/v2/stellar-four-sites.webp)
+Stellar 可以只是一个安静的博客，也可以慢慢长成个人知识库。这个仓库维护一组包含真实内容、可以直接运行的 Hexo 示例站，并从同一份来源生成 Blueprints。可用示例以 [`blueprints.json`](blueprints.json) 为准。
 
 ## 先选一个最像你的
 
@@ -33,7 +31,7 @@ npm ci
 npm run dev -- --site lightblog
 ```
 
-也可以把 `lightblog` 换成 `blog`、`knowledge` 或 `docs`。四个站点使用不同端口，不会互相覆盖。
+要打开其它站点，把 `lightblog` 换成 [`blueprints.json`](blueprints.json) 中对应的 Blueprint ID。各示例使用独立端口，可以同时运行。
 
 ## 这些示例值得看什么
 
@@ -67,7 +65,7 @@ npm run check:blueprints
 npm run check
 ```
 
-`npm run check` 会验证四个站点和 Blueprint 制品。主题候选包的专项验收仍可使用：
+`npm run check` 会验证清单中登记的全部站点和 Blueprint 制品。主题候选包的专项验收仍可使用：
 
 ```bash
 node scripts/blueprint-artifacts.mjs check --theme-tarball /absolute/path/to/hexo-theme-stellar.tgz
@@ -77,4 +75,4 @@ node scripts/blueprint-artifacts.mjs check --theme-tarball /absolute/path/to/hex
 
 ## 版本说明
 
-四个示例当前锁定同一个 Stellar 候选 commit，具体值以 [`blueprints.json`](blueprints.json) 和各站点 `package.json` 为准。Beta、RC 或稳定版是否发布，要看主题与示例仓库的实际 Release，不能从目录名推断。
+仓库中的示例锁定同一个 Stellar 候选 commit，具体值以 [`blueprints.json`](blueprints.json) 和各站点 `package.json` 为准。Beta、RC 或稳定版是否发布，要看主题与示例仓库的实际 Release，不能从目录名推断。

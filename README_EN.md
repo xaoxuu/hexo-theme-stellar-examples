@@ -1,10 +1,8 @@
-# Four ways to start with Stellar
+# Stellar examples and Blueprints
 
 [English](README_EN.md) · [简体中文](README.md)
 
-Stellar can be a quiet writing space or grow into a personal knowledge base. These are four complete Hexo sites with real content, not empty screenshot fixtures.
-
-![A light blog, a classic blog, a personal knowledge base, and project documentation built with Stellar](https://xaoxuu.com/wiki/stellar/assets/screenshots/v2/stellar-four-sites.webp)
+Stellar can be a quiet writing space or grow into a personal knowledge base. This repository maintains a growing collection of runnable Hexo sites with real content and generates Blueprints from the same sources. [`blueprints.json`](blueprints.json) is the catalog of available examples.
 
 ## Pick the site closest to what you want
 
@@ -28,7 +26,7 @@ npm ci
 npm run dev -- --site lightblog
 ```
 
-Replace `lightblog` with `blog`, `knowledge`, or `docs` to open another site.
+To open another site, replace `lightblog` with its Blueprint ID from [`blueprints.json`](blueprints.json). Each example uses its own port, so multiple sites can run at the same time.
 
 Each case directory has a short guide to the result, the files worth editing first, and the command used to run it.
 
@@ -43,7 +41,7 @@ npm run artifacts
 node main.mjs create my-site --blueprint lightblog
 ```
 
-## Check all four sites
+## Check every registered site
 
 ```bash
 npm run doctor
@@ -53,4 +51,4 @@ npm run check:blueprints
 npm run check
 ```
 
-All cases are pinned to the same Stellar candidate. Read [`blueprints.json`](blueprints.json) and the site package files for the exact commit; do not infer a published version from the repository version string.
+The check commands discover every site registered in the catalog and validate the generated Blueprint artifacts. All cases are pinned to the same Stellar candidate. Read [`blueprints.json`](blueprints.json) and the site package files for the exact commit; do not infer a published version from the repository version string.
