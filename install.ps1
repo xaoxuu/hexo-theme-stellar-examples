@@ -1,11 +1,11 @@
 param(
-  [string]$InstallVersion = $(if ($env:STELLAR_INSTALL_VERSION) { $env:STELLAR_INSTALL_VERSION } else { "latest" }),
+  [string]$SourceRef = $(if ($null -ne $env:STELLAR_INSTALL_REF) { $env:STELLAR_INSTALL_REF } else { "main" }),
   [Parameter(ValueFromRemainingArguments = $true)]
   [string[]]$CliArguments
 )
 
 $ErrorActionPreference = "Stop"
-$Repository = "xaoxuu/hexo-theme-stellar-examples"
+$Repository = if ($env:STELLAR_INSTALL_REPOSITORY) { $env:STELLAR_INSTALL_REPOSITORY } else { "https://github.com/xaoxuu/hexo-theme-stellar-examples.git" }
 
 if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
   throw "需要 Node.js 22 或更高版本。"
@@ -14,31 +14,26 @@ $NodeMajor = [int](& node -p 'process.versions.node.split(".")[0]')
 if ($NodeMajor -lt 22) {
   throw "需要 Node.js 22 或更高版本，当前为 $(& node --version)。"
 }
-
-if ($env:STELLAR_INSTALL_BASE_URL) {
-  $BaseUrl = $env:STELLAR_INSTALL_BASE_URL.TrimEnd('/')
-} elseif ($InstallVersion -eq "latest") {
-  $BaseUrl = "https://github.com/$Repository/releases/latest/download"
-} else {
-  $ReleaseTag = if ($InstallVersion.StartsWith("v")) { $InstallVersion } else { "v$InstallVersion" }
-  $BaseUrl = "https://github.com/$Repository/releases/download/$ReleaseTag"
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+  throw "需要 Git 下载 Stellar 创建器。"
 }
 
 $Temporary = Join-Path ([System.IO.Path]::GetTempPath()) ("stellar-create-" + [guid]::NewGuid().ToString("N"))
 New-Item -ItemType Directory -Path $Temporary | Out-Null
+$Temporary = (Resolve-Path $Temporary).Path
 try {
-  $MainFile = Join-Path $Temporary "main.mjs"
-  $ChecksumsFile = Join-Path $Temporary "checksums.txt"
-  Invoke-WebRequest -Uri "$BaseUrl/main.mjs" -OutFile $MainFile
-  Invoke-WebRequest -Uri "$BaseUrl/checksums.txt" -OutFile $ChecksumsFile
+  $Source = Join-Path $Temporary "source"
+  & git -c http.version=HTTP/1.1 clone --quiet --depth 1 --no-checkout $Repository $Source
+  if ($LASTEXITCODE -ne 0) { throw "Stellar 创建器源码下载失败。" }
 
-  $ChecksumLine = Get-Content $ChecksumsFile | Where-Object { $_ -match '^[a-fA-F0-9]{64}\s{2}main\.mjs$' } | Select-Object -First 1
-  if (-not $ChecksumLine) { throw "版本校验文件缺少 main.mjs。" }
-  $Expected = ($ChecksumLine -split '\s+')[0].ToLowerInvariant()
-  $Actual = (Get-FileHash -Algorithm SHA256 $MainFile).Hash.ToLowerInvariant()
-  if ($Expected -ne $Actual) { throw "main.mjs SHA-256 校验失败。" }
+  $CheckoutRef = if ($SourceRef) { $SourceRef } else { "HEAD" }
+  & git -C $Source checkout --quiet --detach $CheckoutRef
+  if ($LASTEXITCODE -ne 0) { throw "Stellar 创建器版本 $CheckoutRef 不存在。" }
 
-  & node $MainFile @CliArguments
+  & node (Join-Path $Source "scripts/blueprint-artifacts.mjs") build
+  if ($LASTEXITCODE -ne 0) { throw "Stellar Blueprint 制品生成失败。" }
+
+  & node (Join-Path $Source "main.mjs") @CliArguments
   if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 } finally {
   Remove-Item -LiteralPath $Temporary -Recurse -Force -ErrorAction SilentlyContinue

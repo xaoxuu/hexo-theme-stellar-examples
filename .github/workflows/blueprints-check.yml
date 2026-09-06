@@ -33,9 +33,6 @@ jobs:
       - name: Check artifact catalog
         run: node scripts/blueprint-artifacts.mjs check --skip-lock
 
-      - name: Build bootstrap smoke-test assets
-        run: npm run artifacts
-
       - name: Smoke-test POSIX bootstrap
         if: runner.os != 'Windows'
         run: node scripts/bootstrap-smoke.mjs posix
