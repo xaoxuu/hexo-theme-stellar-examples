@@ -6,12 +6,12 @@ Stellar can be a quiet writing space or grow into a personal knowledge base. Thi
 
 ## Pick the site closest to what you want
 
-| Directory / Blueprint | Start here when you want… | Preview |
-| --- | --- | --- |
-| [`case1-lightblog`](case1-lightblog/) / `lightblog` | A quiet home for essays without a permanent sidebar | [Light Blog](https://xaoxuu.github.io/hexo-theme-stellar-examples/lightblog/) |
-| [`case2-blog`](case2-blog/) / `blog` | A classic blog with categories, tags, and series | [Blog](https://xaoxuu.github.io/hexo-theme-stellar-examples/blog/) |
-| [`case3-knowledge`](case3-knowledge/) / `knowledge` | Articles and long-lived knowledge in the same site | [Knowledge](https://xaoxuu.github.io/hexo-theme-stellar-examples/knowledge/) |
-| [`case4-docs`](case4-docs/) / `docs` | Documentation for one project | [Docs](https://xaoxuu.github.io/hexo-theme-stellar-examples/docs/) |
+| Directory / Blueprint | Start here when you want… |
+| --- | --- |
+| [`case1-lightblog`](case1-lightblog/) / `lightblog` | A quiet home for essays without a permanent sidebar |
+| [`case2-blog`](case2-blog/) / `blog` | A classic blog with categories, tags, and series |
+| [`case3-knowledge`](case3-knowledge/) / `knowledge` | Articles and long-lived knowledge in the same site |
+| [`case4-docs`](case4-docs/) / `docs` | Documentation for one project |
 
 If you are unsure, choose `lightblog`. It gives you the smallest useful Stellar site and leaves the other systems for later.
 

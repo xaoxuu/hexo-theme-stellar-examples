@@ -85,7 +85,7 @@ function validateCatalog(catalog, version) {
     if (!item || typeof item.id !== "string" || !/^[a-z0-9-]+$/.test(item.id) || ids.has(item.id)) {
       throw new Error("Blueprint catalog 包含无效或重复 id");
     }
-    if (![item.name, item.description, item.appearance, item.preview, item.archive, item.sha256].every(value => typeof value === "string" && value.length > 0)) {
+    if (![item.name, item.description, item.appearance, item.archive, item.sha256].every(value => typeof value === "string" && value.length > 0)) {
       throw new Error(`Blueprint ${item.id} 元数据不完整`);
     }
     if (!/^[a-f0-9]{64}$/i.test(item.sha256)) throw new Error(`Blueprint ${item.id} SHA-256 无效`);

@@ -12,32 +12,28 @@
       "name": "留白",
       "description": "留一处安静的写作空间，适合长文、随笔与低干扰阅读。",
       "appearance": "Flat",
-      "source": "case1-lightblog",
-      "preview": "https://xaoxuu.github.io/hexo-theme-stellar-examples/lightblog/"
+      "source": "case1-lightblog"
     },
     {
       "id": "blog",
       "name": "星迹",
       "description": "经典侧边栏卡片博客，适合持续发布技术、阅读与生活内容。",
       "appearance": "Card",
-      "source": "case2-blog",
-      "preview": "https://xaoxuu.github.io/hexo-theme-stellar-examples/blog/"
+      "source": "case2-blog"
     },
     {
       "id": "knowledge",
       "name": "个人知识库",
       "description": "内容聚合型知识博客，展示专题、标签与系统化整理方式。",
       "appearance": "Glass",
-      "source": "case3-knowledge",
-      "preview": "https://xaoxuu.github.io/hexo-theme-stellar-examples/knowledge/"
+      "source": "case3-knowledge"
     },
     {
       "id": "docs",
       "name": "项目文档",
       "description": "单项目 Wiki 文档站，展示从安装到配置的完整文档旅程。",
       "appearance": "Card",
-      "source": "case4-docs",
-      "preview": "https://xaoxuu.github.io/hexo-theme-stellar-examples/docs/"
+      "source": "case4-docs"
     }
   ]
 }

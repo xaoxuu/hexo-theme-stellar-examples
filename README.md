@@ -6,12 +6,12 @@ Stellar 可以只是一个安静的博客，也可以慢慢长成个人知识库
 
 ## 先选一个最像你的
 
-| 目录 / Blueprint | 适合你，如果…… | 打开看看 |
-| --- | --- | --- |
-| [`case1-lightblog`](case1-lightblog/) / `lightblog` | 只想安静写文章，不需要常驻侧栏 | [留白](https://xaoxuu.github.io/hexo-theme-stellar-examples/lightblog/) |
-| [`case2-blog`](case2-blog/) / `blog` | 喜欢经典博客，想保留分类、标签和专栏 | [星迹](https://xaoxuu.github.io/hexo-theme-stellar-examples/blog/) |
-| [`case3-knowledge`](case3-knowledge/) / `knowledge` | 想把文章、项目资料和长期主题放在一起 | [个人知识库](https://xaoxuu.github.io/hexo-theme-stellar-examples/knowledge/) |
-| [`case4-docs`](case4-docs/) / `docs` | 正在给一个项目维护完整文档 | [项目文档](https://xaoxuu.github.io/hexo-theme-stellar-examples/docs/) |
+| 目录 / Blueprint | 适合你，如果…… |
+| --- | --- |
+| [`case1-lightblog`](case1-lightblog/) / `lightblog` | 只想安静写文章，不需要常驻侧栏 |
+| [`case2-blog`](case2-blog/) / `blog` | 喜欢经典博客，想保留分类、标签和专栏 |
+| [`case3-knowledge`](case3-knowledge/) / `knowledge` | 想把文章、项目资料和长期主题放在一起 |
+| [`case4-docs`](case4-docs/) / `docs` | 正在给一个项目维护完整文档 |
 
 拿不准时从 `lightblog` 开始。它保留写作和阅读需要的部分，其它能力等以后真的用到再加。
 

@@ -315,7 +315,6 @@ export function buildArtifacts(options = {}) {
         name: blueprint.name,
         description: blueprint.description,
         appearance: blueprint.appearance,
-        preview: blueprint.preview,
         archive: releaseUrl(blueprintManifest.version, file),
         file,
         sha256: sha256(archive),
