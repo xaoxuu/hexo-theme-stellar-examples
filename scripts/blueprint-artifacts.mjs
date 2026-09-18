@@ -180,7 +180,10 @@ function standaloneLock(source, pkg) {
 }
 
 function run(command, args, directory) {
-  const result = spawnSync(command, args, {
+  // npm.cmd needs a shell on Windows; callers supply only fixed npm flags.
+  const npmShell = process.platform === "win32" && command === "npm.cmd";
+  const result = spawnSync(npmShell ? `npm.cmd ${args.join(" ")}` : command, npmShell ? [] : args, {
+    shell: npmShell,
     cwd: directory,
     encoding: "utf8",
     stdio: "pipe",
@@ -237,9 +240,9 @@ function checkCreatedBlueprint(release, catalog, site, temporaryRoot, themeTarba
   useThemeTarball(target, themeTarball);
   const npm = process.platform === "win32" ? "npm.cmd" : "npm";
   run(npm, ["ci", "--no-audit", "--no-fund"], target);
-  const hexo = path.join(target, "node_modules", ".bin", process.platform === "win32" ? "hexo.cmd" : "hexo");
-  run(hexo, ["stellar", "doctor", "--format", "text"], target);
-  run(hexo, ["generate"], target);
+  const hexo = path.join(target, "node_modules", "hexo", "bin", "hexo");
+  run(process.execPath, [hexo, "stellar", "doctor", "--format", "text"], target);
+  run(process.execPath, [hexo, "generate"], target);
   for (const relative of site.expectedFiles) {
     if (!fs.existsSync(path.join(target, "public", relative))) throw new Error(`${site.id} artifact is missing ${relative}`);
   }

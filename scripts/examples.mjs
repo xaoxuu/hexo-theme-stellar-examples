@@ -40,8 +40,8 @@ function siteRoot(site) {
   return path.join(root, site.source);
 }
 
-function hexoBinary(baseDir) {
-  return path.join(baseDir, "node_modules", ".bin", process.platform === "win32" ? "hexo.cmd" : "hexo");
+function hexoEntry(baseDir) {
+  return path.join(baseDir, "node_modules", "hexo", "bin", "hexo");
 }
 
 function configArgument(site, developmentPort = null) {
@@ -84,7 +84,7 @@ function runHexo(site, args, options = {}) {
   const baseDir = options.baseDir || siteRoot(site);
   const developmentPort = options.development ? Number(option("port") || site.port) : null;
   const config = options.config || configArgument(site, developmentPort);
-  return run(hexoBinary(baseDir), [...args, "--config", config, "--output", multiconfigOutput(site)], { cwd: baseDir, ...options });
+  return run(process.execPath, [hexoEntry(baseDir), ...args, "--config", config, "--output", multiconfigOutput(site)], { cwd: baseDir, ...options });
 }
 
 function clean(site) {
@@ -313,7 +313,7 @@ async function startServers(targets) {
   for (const { site, port } of ports) process.stdout.write(`  http://127.0.0.1:${port}/  ${site.name} · ${site.type}\n`);
   process.stdout.write("\n  0. 停止预览\n\n");
 
-  const children = ports.map(({ site, port }) => spawn(hexoBinary(siteRoot(site)), serverArgs(site, port), {
+  const children = ports.map(({ site, port }) => spawn(process.execPath, [hexoEntry(siteRoot(site)), ...serverArgs(site, port)], {
     cwd: siteRoot(site),
     env: { ...process.env, HEXO_READY: "" },
     stdio: "ignore"
