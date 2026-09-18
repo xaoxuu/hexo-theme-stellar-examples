@@ -5,7 +5,6 @@ topbar:
     image:
       src: /assets/brand.webp
   menu:
-    - type: search
     - id: wiki
       title: 文档
       icon: default:documents
@@ -26,13 +25,11 @@ leftbar:
       title: GitHub
 
 footer:
-  sections:
+  sitemap:
     - title: Stellar
       items:
-        - title: 文档首页
-          url: /
-        - title: 复刻本站
-          url: /build-this-site/
+        - '[文档首页](/)'
+        - '[复刻本站](/build-this-site/)'
 
 
 
@@ -52,4 +49,5 @@ features:
   reveal:
     enabled: true
   card_hover:
-    enabled: true
+    spotlight: true
+    tilt: true

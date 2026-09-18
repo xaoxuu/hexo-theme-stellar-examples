@@ -25,24 +25,20 @@ leftbar:
       icon: default:documents
       url: /wiki/
       accent: '#3DC550'
-    - type: search
 footer:
-  sections:
+  sitemap:
     - title: 浏览知识库
       items:
-        - title: 最近文章
-          url: /
-        - title: 知识库目录
-          url: /wiki/
-        - title: 内容归档
-          url: /archives/
+        - '[最近文章](/)'
+        - '[知识库目录](/wiki/)'
+        - '[内容归档](/archives/)'
 
 profiles:
   wiki_index:
     active_menu: wiki
-  notebook_index:
+  notebooks:
     active_menu: post
-  note_index:
+  notebook:
     active_menu: post
   note:
     active_menu: post
@@ -57,6 +53,7 @@ features:
   reveal:
     enabled: true
   card_hover:
-    enabled: true
+    spotlight: true
+    tilt: true
 appearance:
   preset: glass

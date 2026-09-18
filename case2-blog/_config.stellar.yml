@@ -31,22 +31,19 @@ leftbar:
       icon: default:calendar
       url: /archives/
       accent: '#7C4DFF'
-    - type: search
 footer:
-  sections:
+  sitemap:
     - title: 浏览星迹
       items:
-        - title: 最近文章
-          url: /
-        - title: 内容归档
-          url: /archives/
+        - '[最近文章](/)'
+        - '[内容归档](/archives/)'
 
 profiles:
   wiki_index:
     active_menu: post
-  notebook_index:
+  notebooks:
     active_menu: post
-  note_index:
+  notebook:
     active_menu: post
   note:
     active_menu: post

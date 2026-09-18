@@ -6,7 +6,6 @@ topbar:
     image:
       src: /assets/brand.webp
   menu:
-    - type: search
     - id: post
       title: 阅读
       icon: default:documents
@@ -40,9 +39,9 @@ profiles:
         - toc
     rightbar:
       widgets: []
-  notebook_index:
+  notebooks:
     active_menu: post
-  note_index:
+  notebook:
     active_menu: post
   note:
     active_menu: post

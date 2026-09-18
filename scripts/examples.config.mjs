@@ -5,7 +5,7 @@ const metadata = new Map(blueprintManifest.blueprints.map(blueprint => [blueprin
 
 export const repositoryName = "hexo-theme-stellar-examples";
 export const pagesBase = `/${repositoryName}/`;
-export const themeCandidate = "9714968ece8ff6e328423dbb40c72b7c5796273d";
+export const themeCandidate = "784269a375f4ac0a1131a2be6640798fa003560a";
 export const themeSpec = blueprintManifest.theme.spec;
 export { blueprintManifest };
 

@@ -3,8 +3,8 @@
   "version": "2.0.0-alpha.1",
   "repository": "xaoxuu/hexo-theme-stellar-examples",
   "theme": {
-    "version": "2.0.0-alpha.1",
-    "spec": "https://github.com/xaoxuu/hexo-theme-stellar/archive/9714968ece8ff6e328423dbb40c72b7c5796273d.tar.gz"
+    "version": "2.0.0-rc.5",
+    "spec": "https://github.com/xaoxuu/hexo-theme-stellar/archive/784269a375f4ac0a1131a2be6640798fa003560a.tar.gz"
   },
   "blueprints": [
     {
