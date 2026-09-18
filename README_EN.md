@@ -34,8 +34,16 @@ Each case directory has a short guide to the result, the files worth editing fir
 
 The Blueprint creator previews its plan and refuses to overwrite an occupied directory. You can launch it directly from the main branch without depending on an unpublished Release:
 
+macOS / Linux:
+
 ```bash
 curl -fsSL https://github.com/xaoxuu/hexo-theme-stellar-examples/raw/main/install.sh | sh -s -- create my-site --blueprint=lightblog --non-interactive
+```
+
+Windows PowerShell 7+ (`pwsh`):
+
+```powershell
+& ([scriptblock]::Create((Invoke-RestMethod https://github.com/xaoxuu/hexo-theme-stellar-examples/raw/main/install.ps1))) -CliArguments @('create', 'my-site', '--blueprint=lightblog', '--non-interactive')
 ```
 
 The command requires Node.js 22+, Git, and npm. It builds and verifies the Blueprint artifacts in a temporary directory, then removes that directory after completion.

@@ -46,8 +46,16 @@ npm run dev -- --site lightblog
 
 Blueprint 创建器会检查目标目录、展示完整计划并拒绝覆盖已有文件。当前可以直接从 main 分支启动创建器，不依赖尚未发布的 Release：
 
+macOS / Linux：
+
 ```bash
 curl -fsSL https://github.com/xaoxuu/hexo-theme-stellar-examples/raw/main/install.sh | sh -s -- create my-site --blueprint=lightblog --non-interactive
+```
+
+Windows PowerShell 7+（`pwsh`）：
+
+```powershell
+& ([scriptblock]::Create((Invoke-RestMethod https://github.com/xaoxuu/hexo-theme-stellar-examples/raw/main/install.ps1))) -CliArguments @('create', 'my-site', '--blueprint=lightblog', '--non-interactive')
 ```
 
 命令需要 Node.js 22+、Git 和 npm；创建器会在临时目录生成并校验蓝图制品，完成后自动清理。

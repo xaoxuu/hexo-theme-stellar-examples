@@ -179,8 +179,11 @@ function targetState(target) {
 
 function runNpmInstall(target) {
   process.stdout.write("  安装依赖……\n");
-  const command = process.platform === "win32" ? "npm.cmd" : "npm";
-  const result = spawnSync(command, [fs.existsSync(path.join(target, "package-lock.json")) ? "ci" : "install", "--no-audit", "--no-fund"], {
+  const args = [fs.existsSync(path.join(target, "package-lock.json")) ? "ci" : "install", "--no-audit", "--no-fund"];
+  const windows = process.platform === "win32";
+  // Only fixed npm arguments enter the shell; the target stays in cwd.
+  const result = spawnSync(windows ? `npm.cmd ${args.join(" ")}` : "npm", windows ? [] : args, {
+    shell: windows,
     cwd: target,
     stdio: "inherit"
   });
@@ -367,8 +370,8 @@ async function interactiveMenu() {
       return;
     }
     if (choice === "2" && isExamplesRepository) {
-      const command = process.platform === "win32" ? "npm.cmd" : "npm";
-      const result = spawnSync(command, ["install"], { cwd: scriptRoot, stdio: "inherit" });
+      const windows = process.platform === "win32";
+      const result = spawnSync(windows ? "npm.cmd install" : "npm", windows ? [] : ["install"], { shell: windows, cwd: scriptRoot, stdio: "inherit" });
       if (result.status !== 0) throw new Error("依赖安装失败");
     } else if (choice === "3" && isExamplesRepository) await startLocalPreviews();
     else if (choice === "4" && isExamplesRepository) maintenanceCommand(["clean"]);
