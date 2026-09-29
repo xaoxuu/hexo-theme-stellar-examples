@@ -24,11 +24,11 @@ after(() => {
 });
 
 test("CLI 参数同时支持交互默认值和非交互创建", () => {
-  assert.deepEqual(parseArguments(["create", "my-site", "--blueprint", "blog", "--no-install", "--non-interactive"]), {
+  assert.deepEqual(parseArguments(["create", "my-site", "--blueprint", "minimalblog", "--no-install", "--non-interactive"]), {
     command: "create",
     target: "my-site",
     version: "",
-    blueprint: "blog",
+    blueprint: "minimalblog",
     install: false,
     nonInteractive: true
   });
@@ -49,11 +49,11 @@ test("归档路径拒绝绝对路径、父目录与 Windows 路径", () => {
 });
 
 test("非交互 CLI 从本地版本制品创建单个完整站点", () => {
-  const target = path.join(temporary, "created-blog");
+  const target = path.join(temporary, "created-minimalblog");
   fs.mkdirSync(target);
   const result = spawnSync(process.execPath, [
     path.resolve("main.mjs"), "create", target,
-    "--blueprint", "blog",
+    "--blueprint", "minimalblog",
     "--version", catalog.version,
     "--no-install",
     "--non-interactive"
@@ -63,14 +63,14 @@ test("非交互 CLI 从本地版本制品创建单个完整站点", () => {
     env: { ...process.env, STELLAR_BLUEPRINT_CATALOG: path.join(release, "catalog.json") }
   });
   assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
-  for (const relative of ["package.json", "package-lock.json", "_config.yml", "_config.stellar.yml", "source/_posts/welcome-to-xingji.md"]) {
+  for (const relative of ["package.json", "package-lock.json", "_config.yml", "_config.stellar.yml", "source/_posts/welcome-to-suye.md"]) {
     assert.equal(fs.existsSync(path.join(target, relative)), true, relative);
   }
   assert.match(fs.readFileSync(path.join(target, "_config.yml"), "utf8"), /root: \/\n/);
 
   const conflict = spawnSync(process.execPath, [
     path.resolve("main.mjs"), "create", target,
-    "--blueprint", "blog", "--version", catalog.version,
+    "--blueprint", "minimalblog", "--version", catalog.version,
     "--no-install", "--non-interactive"
   ], {
     cwd: path.resolve("."),
@@ -134,13 +134,13 @@ test("创建器在错误 SHA-256 时不留下目标目录", async () => {
 test("维护命令清理全部缓存或单站开发缓存", () => {
   const cache = path.join(temporary, "maintenance-cache");
   fs.mkdirSync(cache);
-  fs.writeFileSync(path.join(cache, "development-blog.yml"), "root: /\n");
+  fs.writeFileSync(path.join(cache, "development-minimalblog.yml"), "root: /\n");
   fs.writeFileSync(path.join(cache, "development-docs.yml"), "root: /\n");
-  fs.mkdirSync(path.join(cache, "multiconfig", "blog"), { recursive: true });
+  fs.mkdirSync(path.join(cache, "multiconfig", "minimalblog"), { recursive: true });
   fs.mkdirSync(path.join(cache, "multiconfig", "docs"), { recursive: true });
-  clearCache(cache, "blog");
-  assert.equal(fs.existsSync(path.join(cache, "development-blog.yml")), false);
-  assert.equal(fs.existsSync(path.join(cache, "multiconfig", "blog")), false);
+  clearCache(cache, "minimalblog");
+  assert.equal(fs.existsSync(path.join(cache, "development-minimalblog.yml")), false);
+  assert.equal(fs.existsSync(path.join(cache, "multiconfig", "minimalblog")), false);
   assert.equal(fs.existsSync(path.join(cache, "development-docs.yml")), true);
   assert.equal(fs.existsSync(path.join(cache, "multiconfig", "docs")), true);
   clearCache(cache, "");
@@ -148,7 +148,7 @@ test("维护命令清理全部缓存或单站开发缓存", () => {
 });
 
 test("多配置命令不在示例目录残留 _multiconfig.yml", () => {
-  const site = path.resolve("case1-lightblog");
+  const site = path.resolve("case4011-lightblog");
   const generated = path.join(site, "_multiconfig.yml");
   fs.rmSync(generated, { force: true });
   try {

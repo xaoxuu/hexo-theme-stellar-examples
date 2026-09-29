@@ -1,0 +1,5 @@
+name: 写作系统
+headline: 写作系统
+description: 把写作、工具和发布流程整理成一套可以重复使用的方法。
+route:
+  start: one-paragraph-before-the-title

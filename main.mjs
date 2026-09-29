@@ -85,7 +85,7 @@ function validateCatalog(catalog, version) {
     if (!item || typeof item.id !== "string" || !/^[a-z0-9-]+$/.test(item.id) || ids.has(item.id)) {
       throw new Error("Blueprint catalog 包含无效或重复 id");
     }
-    if (![item.name, item.description, item.appearance, item.archive, item.sha256].every(value => typeof value === "string" && value.length > 0)) {
+    if (![item.description, item.appearance, item.archive, item.sha256].every(value => typeof value === "string" && value.length > 0)) {
       throw new Error(`Blueprint ${item.id} 元数据不完整`);
     }
     if (!/^[a-f0-9]{64}$/i.test(item.sha256)) throw new Error(`Blueprint ${item.id} SHA-256 无效`);
@@ -203,7 +203,7 @@ async function createFromSelection({ catalog, blueprint, target, install }) {
   fs.mkdirSync(staged);
   let moved = false;
   try {
-    const archive = await download(blueprint.archive, `${blueprint.name} Blueprint`);
+    const archive = await download(blueprint.archive, `${blueprint.id} Blueprint`);
     process.stdout.write("  校验 SHA-256……\n");
     if (sha256(archive) !== blueprint.sha256.toLowerCase()) throw new Error(`${blueprint.id} Blueprint SHA-256 校验失败`);
     process.stdout.write("  解包 Blueprint……\n");
@@ -297,7 +297,7 @@ async function selectBlueprint(prompt, catalog, requested) {
   }
   process.stdout.write("\n可用 Blueprint：\n\n");
   catalog.blueprints.forEach((item, index) => {
-    process.stdout.write(`  ${index + 1}. ${item.name} · ${item.appearance}\n     ${item.description}\n`);
+    process.stdout.write(`  ${index + 1}. ${item.appearance}\n     ${item.description}\n`);
   });
   const choices = catalog.blueprints.map((_, index) => String(index + 1));
   const choice = Number(await prompt.choose("选择 Blueprint", choices, "1"));
@@ -317,7 +317,7 @@ async function createCommand(args, options = {}) {
   const install = args.install == null
     ? (prompt ? /^y$/i.test(await prompt.choose("创建后安装依赖？(y/n)", ["y", "n"], "y")) : true)
     : args.install;
-  process.stdout.write(["", "创建计划：", `  Blueprint  ${blueprint.name} (${blueprint.id})`, `  外观       ${blueprint.appearance}`, `  版本       ${catalog.version}`, `  目标       ${path.resolve(target)}`, `  安装依赖   ${install ? "是" : "否"}`, ""].join("\n"));
+  process.stdout.write(["", "创建计划：", `  Blueprint  ${blueprint.id}`, `  外观       ${blueprint.appearance}`, `  版本       ${catalog.version}`, `  目标       ${path.resolve(target)}`, `  安装依赖   ${install ? "是" : "否"}`, ""].join("\n"));
   if (prompt) {
     const confirmed = await prompt.choose("开始创建？(y/n)", ["y", "n"], "n");
     if (!/^y$/i.test(confirmed)) {

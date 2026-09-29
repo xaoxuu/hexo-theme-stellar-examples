@@ -8,10 +8,11 @@ Stellar can be a quiet writing space or grow into a personal knowledge base. Thi
 
 | Directory / Blueprint | Start here when you want… |
 | --- | --- |
-| [`case1-lightblog`](case1-lightblog/) / `lightblog` | A quiet home for essays without a permanent sidebar |
-| [`case2-blog`](case2-blog/) / `blog` | A classic blog with categories, tags, and series |
-| [`case3-knowledge`](case3-knowledge/) / `knowledge` | Articles and long-lived knowledge in the same site |
-| [`case4-docs`](case4-docs/) / `docs` | Documentation for one project |
+| [`case4011-lightblog`](case4011-lightblog/) / `lightblog` | A quiet home for essays without a permanent sidebar |
+| [`case4012-minimalblog`](case4012-minimalblog/) / `minimalblog` | A minimal sidebar blog that keeps the focus on long-form writing |
+| [`case4041-notebook`](case4041-notebook/) / `notebook` | A notebook-first site that sorts loose notes with notebooks and tags |
+| [`case4021-knowledge`](case4021-knowledge/) / `knowledge` | Articles and long-lived knowledge in the same site |
+| [`case4031-docs`](case4031-docs/) / `docs` | Documentation for one project |
 
 If you are unsure, choose `lightblog`. It gives you the smallest useful Stellar site and leaves the other systems for later.
 

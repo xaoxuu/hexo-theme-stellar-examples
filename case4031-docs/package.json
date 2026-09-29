@@ -1,0 +1,16 @@
+{
+  "name": "@stellar-examples/docs",
+  "version": "2.0.0-alpha.1",
+  "private": true,
+  "hexo": {
+    "version": "8.1.2"
+  },
+  "dependencies": {
+    "hexo": "8.1.2",
+    "hexo-front-matter": "4.2.1",
+    "hexo-renderer-marked": "7.0.1",
+    "hexo-server": "3.0.0",
+    "hexo-util": "4.0.0",
+    "hexo-theme-stellar": "https://github.com/xaoxuu/hexo-theme-stellar/archive/7734b6da2e7f29c727fdaa2ff14be2d1a9b2c90d.tar.gz"
+  }
+}

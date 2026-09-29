@@ -1,0 +1,70 @@
+leftbar:
+  enabled: true
+  brand:
+    name: 素页
+    tagline: 把注意力留给文字本身
+    image:
+      src: /assets/brand.webp
+  menu:
+    - id: post
+      title: 文章
+      icon: default:documents
+      url: /
+    - id: friends
+      icon: solar:users-group-two-rounded-bold-duotone
+      accent: '#F44336'
+      title: 友链
+      url: /friends/
+    - id: about
+      icon: solar:user-id-bold-duotone
+      accent: '#b92ed1'
+      title: 关于
+      url: /about/
+footer:
+  sitemap:
+    - title: 浏览素页
+      items:
+        - '[最近文章](/)'
+        - '[内容归档](/archives/)'
+    - title: 分类查找
+      items:
+        - '[分类](/categories/)'
+        - '[标签](/tags/)'
+        - '[专栏](/topic/)'
+    - title: 联系与关于
+      items:
+        - '[关于](/about/)'
+        - '[友链](/friends/)'
+
+profiles:
+  wiki_index:
+    active_menu: post
+  notebooks:
+    active_menu: post
+  notebook:
+    active_menu: post
+  note:
+    active_menu: post
+  topic:
+    active_menu: topic
+
+# 配置博客与专栏文章的展示行为。
+article:
+  # 设置文章排版风格；可选值为 tech 或 story。
+  style: story
+  listing:
+    show_tags: true
+  show_reading_time: true
+
+appearance:
+  preset: minimal
+  # 配置主题语义颜色。
+  colors:
+    primary: hsl(44 96% 55%)
+  typography:
+    font_family:
+      body: '"Courier New", ui-serif, Georgia, "Times New Roman", serif'
+      code: 'Monaco, Consolas, system-ui, "Courier New", monospace, sans-serif'
+features:
+  color_scheme_switch:
+    enabled: true

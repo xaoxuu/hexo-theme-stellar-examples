@@ -1,0 +1,76 @@
+leftbar:
+  brand:
+    name: 个人知识库
+    tagline: 记录、连接并重新发现知识
+    image:
+      src: /assets/brand.webp
+  menu:
+    - id: post
+      title: 近期发布
+      icon: default:documents
+      url: /
+      accent: '#1BCDFC'
+    - id: topic
+      title: 专栏
+      icon: default:pin
+      url: /topic/
+      accent: '#F44336'
+    - id: archives
+      title: 文章归档
+      icon: default:calendar
+      url: /archives/
+      accent: '#7C4DFF'
+    - id: wiki
+      title: 知识库
+      icon: default:documents
+      url: /wiki/
+      accent: '#3DC550'
+footer:
+  sitemap:
+    - title: 浏览知识库
+      items:
+        - '[最近文章](/)'
+        - '[知识库目录](/wiki/)'
+        - '[内容归档](/archives/)'
+    - title: 知识管理专题
+      items:
+        - '[个人知识管理入门](/wiki/knowledge-management/)'
+        - '[收集材料时保留上下文](/wiki/knowledge-management/capture/)'
+        - '[将材料整理成独立笔记](/wiki/knowledge-management/organize/)'
+        - '[让回访产生一个实际结果](/wiki/knowledge-management/review/)'
+    - title: 建站手册专题
+      items:
+        - '[Stellar 建站手册导读](/wiki/site-handbook/)'
+        - '[组织博客与 Wiki 文档](/wiki/site-handbook/content/)'
+        - '[为知识库建立导航](/wiki/site-handbook/navigation/)'
+        - '[检查与预览你的站点](/wiki/site-handbook/publishing/)'
+    - title: 分类查找
+      items:
+        - '[分类](/categories/)'
+        - '[标签](/tags/)'
+        - '[专栏](/topic/)'
+
+profiles:
+  wiki_index:
+    active_menu: wiki
+  notebooks:
+    active_menu: post
+  notebook:
+    active_menu: post
+  note:
+    active_menu: post
+  topic:
+    active_menu: topic
+
+article:
+  listing:
+    show_tags: true
+  show_reading_time: true
+features:
+  reveal:
+    enabled: true
+  card_hover:
+    spotlight: true
+    tilt: true
+appearance:
+  preset: glass

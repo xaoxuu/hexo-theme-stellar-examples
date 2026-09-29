@@ -1,0 +1,25 @@
+title: 随记
+description: 笔记优先的个人笔记本
+theme: stellar
+url: https://xaoxuu.github.io/hexo-theme-stellar-examples/notebook
+root: /hexo-theme-stellar-examples/notebook/
+permalink: posts/:title/
+
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+
+archive_dir: archives
+category_dir: categories
+tag_dir: tags
+archive_generator:
+  enabled: true
+  per_page: 10
+  yearly: true
+  monthly: false
+  daily: false
+category_generator:
+  per_page: 10
+tag_generator:
+  per_page: 10

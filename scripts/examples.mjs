@@ -5,7 +5,7 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
-import { pagesBase, sites, themeCandidate, themeSpec } from "./examples.config.mjs";
+import { blueprintManifest, configValue, nodeEngine, pagesBase, sites, themeCandidate, themeSpec } from "./examples.config.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sharedConfig = path.join(root, "config", "hexo.yml");
@@ -20,9 +20,11 @@ function option(name) {
   return value;
 }
 
-function assertNode22() {
-  if (Number(process.versions.node.split(".")[0]) < 22) {
-    throw new Error(`Node.js 22 or higher is required, got ${process.version}`);
+const nodeMajor = Number(String(nodeEngine).match(/\d+/)[0]);
+
+function assertNode() {
+  if (Number(process.versions.node.split(".")[0]) < nodeMajor) {
+    throw new Error(`Node.js ${nodeEngine} is required, got ${process.version}`);
   }
 }
 
@@ -118,6 +120,16 @@ function assertContains(file, marker, label = file) {
   if (!content.includes(marker)) throw new Error(`${label} is missing marker: ${marker}`);
 }
 
+// 旧布局的站点检出（每个站点目录下都有自己的 db.json）不属于仓库内容，
+// 只在本地留下时提示一次，不阻断检查。
+function staleCheckouts() {
+  return fs.readdirSync(root, { withFileTypes: true })
+    .filter(entry => entry.isDirectory())
+    .map(entry => entry.name)
+    .filter(name => !sites.some(site => site.source === name))
+    .filter(name => fs.existsSync(path.join(root, name, "db.json")));
+}
+
 function walkFiles(directory) {
   if (!fs.existsSync(directory)) return [];
   const result = [];
@@ -130,7 +142,7 @@ function walkFiles(directory) {
 }
 
 function checkStructure() {
-  assertNode22();
+  assertNode();
   assertFile(path.join(root, "package-lock.json"), "root package-lock.json");
   assertFile(path.join(root, "main.mjs"), "main.mjs");
   assertFile(path.join(root, "blueprints.json"), "blueprints.json");
@@ -138,9 +150,11 @@ function checkStructure() {
   assertFile(path.join(root, "install.ps1"), "install.ps1");
   if ((fs.statSync(path.join(root, "install.sh")).mode & 0o111) === 0) throw new Error("install.sh is not executable");
   if (fs.existsSync(path.join(root, "start.sh"))) throw new Error("Removed entrypoint still exists: start.sh");
-  for (const removed of ["lightblog", "blog", "knowledge", "docs", "stellar", "sites"]) {
-    if (fs.existsSync(path.join(root, removed))) throw new Error(`Removed directory still exists: ${removed}`);
+  const stale = staleCheckouts();
+  if (stale.length > 0) {
+    process.stdout.write(`提示：本机残留旧布局站点目录 ${stale.join("、")}，可自行删除；它们不属于仓库内容。\n`);
   }
+  const hexoVersions = new Set();
   for (const site of sites) {
     const baseDir = siteRoot(site);
     assertFile(path.join(baseDir, "package.json"));
@@ -150,17 +164,43 @@ function checkStructure() {
     if (pkg.dependencies?.["hexo-theme-stellar"] !== themeSpec) {
       throw new Error(`${site.id} does not use ${themeSpec}`);
     }
-    if (pkg.dependencies?.hexo !== "8.1.2" || pkg.hexo?.version !== "8.1.2") {
-      throw new Error(`${site.id} does not pin Hexo 8.1.2`);
-    }
+    // Hexo 由各站自己锁死精确版本，站点之间必须一致；版本值不在这里写第二份。
+    const hexoVersion = pkg.dependencies?.hexo || "";
+    if (!/^\d+\.\d+\.\d+$/.test(hexoVersion)) throw new Error(`${site.id} 必须锁定精确的 Hexo 版本，当前是 ${hexoVersion || "<missing>"}`);
+    if (pkg.hexo?.version !== hexoVersion) throw new Error(`${site.id} 的 hexo 依赖与 hexo.version 不一致`);
+    hexoVersions.add(hexoVersion);
     for (const unexpected of ["package-lock.json", "scaffolds"]) {
       if (fs.existsSync(path.join(baseDir, unexpected))) throw new Error(`${site.id} contains duplicated ${unexpected}`);
     }
-    assertContains(path.join(baseDir, "_config.yml"), `title: ${site.name}`, `${site.id} site name`);
-    assertContains(path.join(baseDir, "_config.yml"), `description: ${site.type}`, `${site.id} site type`);
-    assertContains(path.join(baseDir, "_config.stellar.yml"), `name: ${site.name}`, `${site.id} brand name`);
+    // 站点标题与主题品牌名是同一个事实的两处落点，保持相等。
+    const title = configValue(site.source, "_config.yml", ["title"]);
+    const brand = configValue(site.source, "_config.stellar.yml", ["*", "brand", "name"]);
+    if (title !== brand) throw new Error(`${site.id} 的 _config.yml title 与 brand.name 不一致`);
   }
+  if (hexoVersions.size !== 1) throw new Error(`示例站没有锁定同一个 Hexo 版本：${[...hexoVersions].join(" / ")}`);
+  const hexoVersion = [...hexoVersions][0];
   const rootPackage = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
+  const cliRepository = fs.readFileSync(path.join(root, "main.mjs"), "utf8").match(/const DEFAULT_REPOSITORY = "([^"]+)"/)?.[1] || "";
+  if (cliRepository !== blueprintManifest.repository) {
+    throw new Error(`main.mjs 的 DEFAULT_REPOSITORY（${cliRepository || "<missing>"}）与 blueprints.json 的 repository（${blueprintManifest.repository}）不一致`);
+  }
+  const cliVersion = fs.readFileSync(path.join(root, "main.mjs"), "utf8").match(/const DEFAULT_VERSION = "([^"]+)"/)?.[1] || "";
+  const versions = new Map([
+    ["package.json", rootPackage.version],
+    ["blueprints.json", blueprintManifest.version],
+    ["main.mjs", cliVersion],
+    ...sites.map(site => [`${site.source}/package.json`, JSON.parse(fs.readFileSync(path.join(root, site.source, "package.json"), "utf8")).version])
+  ]);
+  if (new Set(versions.values()).size !== 1) {
+    throw new Error(`版本号不一致：${[...versions].map(([file, version]) => `${file} ${version || "<missing>"}`).join(" / ")}`);
+  }
+  // 独立运行的入口自带 Node 最低版本副本，这里钉住它们与 engines.node 一致。
+  for (const file of ["main.mjs", "install.sh", "install.ps1"]) {
+    const mentioned = [...fs.readFileSync(path.join(root, file), "utf8").matchAll(/Node\.js (\d+)/g)].map(match => Number(match[1]));
+    if (mentioned.length === 0 || mentioned.some(value => value !== nodeMajor)) {
+      throw new Error(`${file} 的 Node.js 最低版本与 package.json engines（${nodeEngine}）不一致`);
+    }
+  }
   if (JSON.stringify(rootPackage.workspaces) !== JSON.stringify(sites.map(site => site.source))) {
     throw new Error("Root workspaces do not match the site manifest order");
   }
@@ -180,13 +220,10 @@ function checkStructure() {
   if (new Set(themeLocks.map(entry => entry.integrity)).size !== 1) {
     throw new Error("Workspace lock entries contain different Stellar integrity records");
   }
-  assertContains(path.join(root, "case1-lightblog", "_config.stellar.yml"), "preset: flat", "lightblog Visual Style");
-  assertContains(path.join(root, "case2-blog", "_config.stellar.yml"), "preset: card", "blog Visual Style");
-  assertContains(path.join(root, "case3-knowledge", "_config.stellar.yml"), "preset: glass", "knowledge Visual Style");
-  if (/^appearance:/m.test(fs.readFileSync(path.join(root, "case4-docs", "_config.stellar.yml"), "utf8"))) {
-    throw new Error("docs must consume the default card style without redundant appearance overrides");
+  if (themeLocks.some(entry => entry.version !== blueprintManifest.theme.version)) {
+    throw new Error(`blueprints.json 的 theme.version（${blueprintManifest.theme.version}）与锁文件实际安装的 Stellar 版本（${themeLocks.map(entry => entry.version).join(" / ")}）不一致`);
   }
-  process.stdout.write(`Structure passed: Hexo 8.1.2 + Stellar ${themeCandidate}\n`);
+  process.stdout.write(`Structure passed: Hexo ${hexoVersion} + Stellar ${themeCandidate}\n`);
 }
 
 function checkOutputs() {
@@ -224,6 +261,18 @@ function checkOutputs() {
         throw new Error(`${site.id} sidebar groups mismatch: ${actual}`);
       }
     }
+    if (site.expectedFooterSections) {
+      const footer = indexHtml.match(/<footer class="page-footer[\s\S]*?<\/footer>/)?.[0] || "";
+      const sections = [...footer.matchAll(/<div class="sitemap-group"><span class="fs15">([^<]*)<\/span>([\s\S]*?)<\/div>/g)]
+        .map(([, title, body]) => ({
+          title,
+          items: [...body.matchAll(/<a\b[^>]*>([\s\S]*?)<\/a>/g)].map(([, label]) => label)
+        }));
+      if (JSON.stringify(sections) !== JSON.stringify(site.expectedFooterSections)) {
+        const actual = sections.map(section => `${section.title}(${section.items.length})`).join(" | ") || "<none>";
+        throw new Error(`${site.id} footer sections mismatch: ${actual}`);
+      }
+    }
     for (const marker of site.forbiddenMarkers) {
       if (renderedHtml.includes(marker)) throw new Error(`${site.id} output contains unresolved marker: ${marker}`);
     }
@@ -235,9 +284,9 @@ function checkOutputs() {
 
 function portalHtml() {
   const cards = sites.map(site => `
-      <a class="card" href=".${site.path}">
-        <span class="meta">${site.type} · ${site.blueprint} · ${site.appearance}</span>
-        <strong>${site.name}</strong>
+      <a class="card" href="./${site.id}/">
+        <span class="meta">${site.appearance}</span>
+        <strong>${site.type}</strong>
         <span>${site.tagline}</span>
       </a>`).join("");
   return `<!doctype html>
@@ -246,7 +295,7 @@ function portalHtml() {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stellar Blueprint Examples</title>
-  <meta name="description" content="Stellar v2 Blueprint 的四个真实 Hexo 8 示例。">
+  <meta name="description" content="Stellar v2 Blueprint 的 ${sites.length} 个真实 Hexo 8 示例。">
   <style>
     :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #11131a; color: #f5f7ff; }
@@ -282,7 +331,7 @@ function prepareDeployment() {
     fs.cpSync(path.join(siteRoot(site), "public"), path.join(destination, site.id), { recursive: true });
   }
   for (const site of sites) {
-    assertContains(path.join(destination, "index.html"), `href=".${site.path}"`, `portal link for ${site.id}`);
+    assertContains(path.join(destination, "index.html"), `href="./${site.id}/"`, `portal link for ${site.id}`);
     assertFile(path.join(destination, site.id, "index.html"), `deployed ${site.id} index`);
   }
   process.stdout.write(`Pages artifact prepared: ${destination}\n`);
@@ -302,15 +351,15 @@ function serverArgs(site, port) {
 }
 
 async function startServers(targets) {
-  assertNode22();
+  assertNode();
   const ports = targets.map(site => ({ site, port: Number(site.port) }));
   if (targets.length === 1 && option("port")) ports[0].port = Number(option("port"));
   for (const { site, port } of ports) {
     if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error(`${site.id} has invalid port ${port}`);
-    if (!(await portAvailable(port))) throw new Error(`${site.name} cannot start: 127.0.0.1:${port} is already in use`);
+    if (!(await portAvailable(port))) throw new Error(`${site.id} cannot start: 127.0.0.1:${port} is already in use`);
   }
   process.stdout.write("\n");
-  for (const { site, port } of ports) process.stdout.write(`  http://127.0.0.1:${port}/  ${site.name} · ${site.type}\n`);
+  for (const { site, port } of ports) process.stdout.write(`  http://127.0.0.1:${port}/  ${site.type}\n`);
   process.stdout.write("\n  0. 停止预览\n\n");
 
   const children = ports.map(({ site, port }) => spawn(process.execPath, [hexoEntry(siteRoot(site)), ...serverArgs(site, port)], {
@@ -359,7 +408,7 @@ async function startServers(targets) {
 
 async function main() {
   const command = process.argv[2] || "";
-  assertNode22();
+  assertNode();
   if (command === "clean") {
     for (const site of selectedSites()) clean(site);
     clearCache();

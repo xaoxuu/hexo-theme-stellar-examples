@@ -1,0 +1,12 @@
+name: 开发随记
+headline: 开发随记
+tagline: 踩过的坑与验证过的做法
+description: 写代码时遇到的问题、临时结论和下一步想试的办法。
+route:
+  path: notebooks/dev
+active_menu: notebooks
+listing:
+  order: 20
+  sort:
+    field: date
+    direction: desc

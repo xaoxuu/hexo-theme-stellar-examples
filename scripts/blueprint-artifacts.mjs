@@ -9,11 +9,24 @@ import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import zlib from "node:zlib";
 
-import { blueprintManifest, sites } from "./examples.config.mjs";
+import { blueprintManifest, nodeEngine, sites } from "./examples.config.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const defaultOutput = path.join(root, "release", blueprintManifest.version);
-const excludedNames = new Set(["_multiconfig.yml", "db.json", "node_modules", "public"]);
+// 外观以各示例站自己的配置为准，catalog 只是把它读出来。
+const appearanceById = new Map(sites.map(site => [site.id, site.appearance]));
+
+// 生成物与机器状态的清单由 .gitignore 定义（唯一 owner），制品只装它之外的文件。
+function ignoredEntries(directory) {
+  const relative = path.relative(root, directory).split(path.sep).join("/");
+  const entries = fs.readdirSync(directory).map(name => path.posix.join(relative, name));
+  if (entries.length === 0) return new Set();
+  const result = spawnSync("git", ["-C", root, "check-ignore", "--stdin"], { input: `${entries.join("\n")}\n`, encoding: "utf8" });
+  if (result.status !== 0 && result.status !== 1) {
+    throw new Error(`无法按 .gitignore 判断生成物：${(result.stderr || result.error?.message || "").trim()}。Blueprints 需要在 git 工作区内构建。`);
+  }
+  return new Set(result.stdout.split("\n").filter(Boolean).map(line => path.posix.basename(line)));
+}
 
 function option(name) {
   const index = process.argv.indexOf(`--${name}`);
@@ -68,14 +81,14 @@ function tarHeader(name, size, mode = 0o644) {
   return header;
 }
 
-function filesBelow(directory, prefix = "") {
+function filesBelow(directory, prefix = "", ignored = new Set()) {
   const result = [];
   for (const entry of fs.readdirSync(directory, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
-    if (excludedNames.has(entry.name)) continue;
+    if (ignored.has(entry.name)) continue;
     const absolute = path.join(directory, entry.name);
     const relative = path.posix.join(prefix, entry.name);
     if (entry.isSymbolicLink()) throw new Error(`Blueprint source cannot contain symlinks: ${relative}`);
-    if (entry.isDirectory()) result.push(...filesBelow(absolute, relative));
+    if (entry.isDirectory()) result.push(...filesBelow(absolute, relative, ignored));
     else if (entry.isFile()) result.push({ absolute, relative });
   }
   return result;
@@ -95,7 +108,7 @@ export function createTarGz(directory) {
 
 function copyTree(source, destination) {
   fs.mkdirSync(destination, { recursive: true });
-  for (const file of filesBelow(source)) {
+  for (const file of filesBelow(source, "", ignoredEntries(source))) {
     const output = path.join(destination, file.relative);
     fs.mkdirSync(path.dirname(output), { recursive: true });
     fs.copyFileSync(file.absolute, output);
@@ -161,7 +174,7 @@ function standaloneLock(source, pkg) {
       name: pkg.name,
       version: pkg.version,
       dependencies: pkg.dependencies,
-      engines: { node: ">=22" }
+    engines: { node: nodeEngine }
     }
   };
   for (const [key, value] of Object.entries(lock.packages)) {
@@ -276,7 +289,7 @@ function stageBlueprint(blueprint, temporaryRoot, options = {}) {
   const pkg = standalonePackage(source, blueprint);
   fs.writeFileSync(path.join(destination, "package.json"), `${JSON.stringify(pkg, null, 2)}\n`);
   fs.writeFileSync(path.join(destination, "README.md"), [
-    `# ${blueprint.name}`,
+    `# Stellar 站点（${blueprint.id} Blueprint）`,
     "",
     `${blueprint.description}`,
     "",
@@ -308,16 +321,17 @@ export function buildArtifacts(options = {}) {
   try {
     const blueprints = [];
     for (const blueprint of blueprintManifest.blueprints) {
-      process.stdout.write(`准备 ${blueprint.name} Blueprint 制品……\n`);
+      process.stdout.write(`准备 ${blueprint.id} Blueprint 制品……\n`);
       const staged = stageBlueprint(blueprint, temporaryRoot, options);
       const file = `stellar-blueprint-${blueprint.id}-${blueprintManifest.version}.tar.gz`;
       const archive = createTarGz(staged);
       fs.writeFileSync(path.join(output, file), archive);
+      const appearance = appearanceById.get(blueprint.id);
+      if (!appearance) throw new Error(`${blueprint.id} 找不到对应的示例站外观`);
       blueprints.push({
         id: blueprint.id,
-        name: blueprint.name,
         description: blueprint.description,
-        appearance: blueprint.appearance,
+        appearance,
         archive: releaseUrl(blueprintManifest.version, file),
         file,
         sha256: sha256(archive),
@@ -327,7 +341,7 @@ export function buildArtifacts(options = {}) {
     const catalog = {
       schema_version: 1,
       version: blueprintManifest.version,
-      node: ">=22",
+      node: nodeEngine,
       theme: blueprintManifest.theme,
       blueprints
     };
@@ -346,7 +360,9 @@ export function buildArtifacts(options = {}) {
 }
 
 async function main() {
-  if (Number(process.versions.node.split(".")[0]) < 22) throw new Error(`Node.js 22 or newer is required, got ${process.version}`);
+  if (Number(process.versions.node.split(".")[0]) < Number(String(nodeEngine).match(/\d+/)[0])) {
+    throw new Error(`Node.js ${nodeEngine} is required, got ${process.version}`);
+  }
   const command = process.argv[2] || "build";
   const requestedOutput = option("output");
   const temporaryCheckOutput = command === "check" && !requestedOutput;

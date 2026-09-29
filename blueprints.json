@@ -3,37 +3,34 @@
   "version": "2.0.0-alpha.1",
   "repository": "xaoxuu/hexo-theme-stellar-examples",
   "theme": {
-    "version": "2.0.0-rc.5",
-    "spec": "https://github.com/xaoxuu/hexo-theme-stellar/archive/784269a375f4ac0a1131a2be6640798fa003560a.tar.gz"
+    "version": "2.0.0-rc.6",
+    "spec": "https://github.com/xaoxuu/hexo-theme-stellar/archive/7734b6da2e7f29c727fdaa2ff14be2d1a9b2c90d.tar.gz"
   },
   "blueprints": [
     {
       "id": "lightblog",
-      "name": "留白",
       "description": "留一处安静的写作空间，适合长文、随笔与低干扰阅读。",
-      "appearance": "Flat",
-      "source": "case1-lightblog"
+      "source": "case4011-lightblog"
     },
     {
-      "id": "blog",
-      "name": "星迹",
-      "description": "经典侧边栏卡片博客，适合持续发布技术、阅读与生活内容。",
-      "appearance": "Card",
-      "source": "case2-blog"
+      "id": "minimalblog",
+      "description": "极简侧栏写作博客，适合安静地写长文与笔记。",
+      "source": "case4012-minimalblog"
+    },
+    {
+      "id": "notebook",
+      "description": "笔记优先的个人笔记本，用笔记本与标签整理零散想法。",
+      "source": "case4041-notebook"
     },
     {
       "id": "knowledge",
-      "name": "个人知识库",
       "description": "内容聚合型知识博客，展示专题、标签与系统化整理方式。",
-      "appearance": "Glass",
-      "source": "case3-knowledge"
+      "source": "case4021-knowledge"
     },
     {
       "id": "docs",
-      "name": "项目文档",
       "description": "单项目 Wiki 文档站，展示从安装到配置的完整文档旅程。",
-      "appearance": "Card",
-      "source": "case4-docs"
+      "source": "case4031-docs"
     }
   ]
 }

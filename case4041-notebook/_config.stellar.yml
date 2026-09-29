@@ -1,0 +1,61 @@
+leftbar:
+  enabled: true
+  brand:
+    name: 随记
+    tagline: 把零散的想法收进一本随时翻开的笔记本
+    image:
+      src: /assets/brand.webp
+  menu:
+    - id: notebooks
+      title: 笔记本
+      icon: default:notebook
+      url: /notebooks/
+      accent: '#3DC550'
+    - id: post
+      title: 近况
+      icon: default:documents
+      url: /
+    - id: archives
+      title: 归档
+      icon: default:calendar
+      url: /archives/
+      accent: '#7C4DFF'
+footer:
+  sitemap:
+    - title: 浏览笔记本
+      items:
+        - '[全部笔记本](/notebooks/)'
+        - '[读书笔记](/notebooks/reading/)'
+        - '[开发随记](/notebooks/dev/)'
+        - '[生活观察](/notebooks/life/)'
+    - title: 最近更新
+      items:
+        - '[近况](/)'
+        - '[内容归档](/archives/)'
+
+profiles:
+  notebooks:
+    active_menu: notebooks
+  notebook:
+    active_menu: notebooks
+  note:
+    active_menu: notebooks
+
+# 配置近况与笔记的展示行为。
+article:
+  # 设置文章排版风格；可选值为 tech 或 story。
+  style: story
+  listing:
+    show_tags: true
+  show_reading_time: true
+
+appearance:
+  preset: card
+  # 配置主题语义颜色。
+  typography:
+    font_family:
+      body: '"Courier New", ui-serif, Georgia, "Times New Roman", serif'
+      code: 'Monaco, Consolas, system-ui, "Courier New", monospace, sans-serif'
+features:
+  color_scheme_switch:
+    enabled: true

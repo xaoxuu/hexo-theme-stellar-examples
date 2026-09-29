@@ -7,10 +7,11 @@
     "node": ">=22"
   },
   "workspaces": [
-    "case1-lightblog",
-    "case2-blog",
-    "case3-knowledge",
-    "case4-docs"
+    "case4011-lightblog",
+    "case4012-minimalblog",
+    "case4041-notebook",
+    "case4021-knowledge",
+    "case4031-docs"
   ],
   "scripts": {
     "start": "node main.mjs",

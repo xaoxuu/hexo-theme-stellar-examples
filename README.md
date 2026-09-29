@@ -8,10 +8,11 @@ Stellar 可以只是一个安静的博客，也可以慢慢长成个人知识库
 
 | 目录 / Blueprint | 适合你，如果…… |
 | --- | --- |
-| [`case1-lightblog`](case1-lightblog/) / `lightblog` | 只想安静写文章，不需要常驻侧栏 |
-| [`case2-blog`](case2-blog/) / `blog` | 喜欢经典博客，想保留分类、标签和专栏 |
-| [`case3-knowledge`](case3-knowledge/) / `knowledge` | 想把文章、项目资料和长期主题放在一起 |
-| [`case4-docs`](case4-docs/) / `docs` | 正在给一个项目维护完整文档 |
+| [`case4011-lightblog`](case4011-lightblog/) / `lightblog` | 只想安静写文章，不需要常驻侧栏 |
+| [`case4012-minimalblog`](case4012-minimalblog/) / `minimalblog` | 想要极简侧栏，把注意力留给长文和笔记 |
+| [`case4041-notebook`](case4041-notebook/) / `notebook` | 想用笔记本和标签整理零散想法与长期笔记 |
+| [`case4021-knowledge`](case4021-knowledge/) / `knowledge` | 想把文章、项目资料和长期主题放在一起 |
+| [`case4031-docs`](case4031-docs/) / `docs` | 正在给一个项目维护完整文档 |
 
 拿不准时从 `lightblog` 开始。它保留写作和阅读需要的部分，其它能力等以后真的用到再加。
 
@@ -36,7 +37,8 @@ npm run dev -- --site lightblog
 ## 这些示例值得看什么
 
 - `lightblog` 展示单栏阅读、顶部导航和偏长的中文文章。
-- `blog` 展示经典侧栏、分类、标签、专栏和连续发布的内容。
+- `minimalblog` 展示极简侧栏和适合长文、笔记的排版。
+- `notebook` 把笔记分进多本笔记本，用层级标签组织，并保留一栏随时间发布的近况。
 - `knowledge` 把博客文章与两套 Wiki 放在一起，方便比较两种内容组织方式。
 - `docs` 只有一套项目文档，首页、目录、内容组件和发布清单都围绕同一个项目。
 
