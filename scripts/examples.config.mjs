@@ -9,9 +9,10 @@ const metadata = new Map(blueprintManifest.blueprints.map(blueprint => [blueprin
 // 仓库身份只在 blueprints.json 的 repository 里写一次。
 export const repositoryName = blueprintManifest.repository.split("/").pop();
 export const pagesBase = `/${repositoryName}/`;
-export const themeSpec = blueprintManifest.theme.spec;
-// 主题 commit 直接从 spec 里读，避免和锁定版本各写一份而对不上。
-export const themeCandidate = themeSpec.match(/[a-f0-9]{40}/)?.[0] || themeSpec;
+// 主题版本只写成 2.0.x 这样的 npm 范围，owner 是 blueprints.json 的 theme.version；
+// 示例站的依赖声明、制品目录、catalog 与归档命名都读它，补丁版本交给锁文件钉住，
+// 范围与安装版本是否一致由 npm 自己判断（见 check:structure 的 npm ls）。
+export const themeVersion = blueprintManifest.theme.version;
 // Node 最低版本只在 package.json engines 里写一次，脚本与制品都读它。
 export const nodeEngine = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")).engines.node;
 export { blueprintManifest };
@@ -91,27 +92,6 @@ export const sites = Object.freeze([
     forbiddenMarkers: [],
     forbiddenFiles: ["wiki/index.html", "notebooks/index.html"]
   }),
-  site("notebook", {
-    port: 4041,
-    expectedFiles: [
-      "index.html",
-      "archives/index.html",
-      "tags/index.html",
-      "notebooks/index.html",
-      "notebooks/reading/index.html",
-      "notebooks/dev/index.html",
-      "notebooks/life/index.html",
-      "posts/welcome-to-suiji/index.html",
-      "search.json"
-    ],
-    expectedMarkers: ["随记", "笔记优先的个人笔记本", "读书笔记", "开发随记", "生活观察"],
-    expectedFooterSections: [
-      { title: "浏览笔记本", items: ["全部笔记本", "读书笔记", "开发随记", "生活观察"] },
-      { title: "最近更新", items: ["近况", "内容归档"] }
-    ],
-    forbiddenMarkers: [],
-    forbiddenFiles: ["wiki/index.html", "topic/index.html"]
-  }),
   site("knowledge", {
     port: 4021,
     expectedFiles: [
@@ -170,5 +150,26 @@ export const sites = Object.freeze([
     ],
     forbiddenMarkers: ["default:book"],
     forbiddenFiles: ["archives/index.html", "categories/index.html", "tags/index.html", "topic/index.html", "wiki/index.html", "wiki/stellar/index.html", "wiki/stellar/build-this-site/index.html", "wiki/stellar/examples/index.html", "wiki/stellar/releases/index.html", "wiki/stellar/articles/index.html", "wiki/stellar/todo/index.html", "wiki/stellar/contributors/index.html", "page/2/index.html"]
+  }),
+  site("notebook", {
+    port: 4041,
+    expectedFiles: [
+      "index.html",
+      "archives/index.html",
+      "tags/index.html",
+      "notebooks/index.html",
+      "notebooks/reading/index.html",
+      "notebooks/dev/index.html",
+      "notebooks/life/index.html",
+      "posts/welcome-to-suiji/index.html",
+      "search.json"
+    ],
+    expectedMarkers: ["随记", "笔记优先的个人笔记本", "读书笔记", "开发随记", "生活观察"],
+    expectedFooterSections: [
+      { title: "浏览笔记本", items: ["全部笔记本", "读书笔记", "开发随记", "生活观察"] },
+      { title: "最近更新", items: ["近况", "内容归档"] }
+    ],
+    forbiddenMarkers: [],
+    forbiddenFiles: ["wiki/index.html", "topic/index.html"]
   })
 ]);

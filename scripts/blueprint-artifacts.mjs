@@ -9,10 +9,11 @@ import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import zlib from "node:zlib";
 
-import { blueprintManifest, nodeEngine, sites } from "./examples.config.mjs";
+import { blueprintManifest, nodeEngine, sites, themeVersion } from "./examples.config.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const defaultOutput = path.join(root, "release", blueprintManifest.version);
+// 制品目录按主题版本线命名，补丁版本由制品自带的锁文件钉住。
+const defaultOutput = path.join(root, "release", themeVersion);
 // 外观以各示例站自己的配置为准，catalog 只是把它读出来。
 const appearanceById = new Map(sites.map(site => [site.id, site.appearance]));
 
@@ -154,7 +155,7 @@ function standalonePackage(source, blueprint) {
       doctor: "hexo stellar doctor"
     },
     hexo: pkg.hexo,
-    dependencies: { ...pkg.dependencies, "hexo-theme-stellar": blueprintManifest.theme.spec }
+    dependencies: { ...pkg.dependencies, "hexo-theme-stellar": themeVersion }
   };
 }
 
@@ -323,7 +324,7 @@ export function buildArtifacts(options = {}) {
     for (const blueprint of blueprintManifest.blueprints) {
       process.stdout.write(`准备 ${blueprint.id} Blueprint 制品……\n`);
       const staged = stageBlueprint(blueprint, temporaryRoot, options);
-      const file = `stellar-blueprint-${blueprint.id}-${blueprintManifest.version}.tar.gz`;
+      const file = `stellar-blueprint-${blueprint.id}-${themeVersion}.tar.gz`;
       const archive = createTarGz(staged);
       fs.writeFileSync(path.join(output, file), archive);
       const appearance = appearanceById.get(blueprint.id);
@@ -332,7 +333,7 @@ export function buildArtifacts(options = {}) {
         id: blueprint.id,
         description: blueprint.description,
         appearance,
-        archive: releaseUrl(blueprintManifest.version, file),
+        archive: releaseUrl(themeVersion, file),
         file,
         sha256: sha256(archive),
         bytes: archive.length
@@ -340,7 +341,7 @@ export function buildArtifacts(options = {}) {
     }
     const catalog = {
       schema_version: 1,
-      version: blueprintManifest.version,
+      version: themeVersion,
       node: nodeEngine,
       theme: blueprintManifest.theme,
       blueprints

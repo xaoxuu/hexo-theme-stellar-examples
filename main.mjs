@@ -11,7 +11,7 @@ import { spawn, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import zlib from "node:zlib";
 
-const DEFAULT_VERSION = "2.0.0-alpha.1";
+const DEFAULT_VERSION = "2.0.x";
 const DEFAULT_REPOSITORY = "xaoxuu/hexo-theme-stellar-examples";
 const scriptFile = fileURLToPath(import.meta.url);
 const scriptRoot = path.dirname(scriptFile);

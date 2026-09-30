@@ -5,7 +5,7 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
-import { blueprintManifest, configValue, nodeEngine, pagesBase, sites, themeCandidate, themeSpec } from "./examples.config.mjs";
+import { blueprintManifest, configValue, nodeEngine, pagesBase, sites, themeVersion } from "./examples.config.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sharedConfig = path.join(root, "config", "hexo.yml");
@@ -93,6 +93,27 @@ function clean(site) {
   runHexo(site, ["clean"]);
 }
 
+// 主题范围与安装版本是否对得上，交给 npm 自己判断，仓库不重新实现范围语义。
+// --package-lock-only 让 npm ls 只读锁文件，不需要 node_modules 已经装好。
+function assertThemeRange() {
+  const args = ["ls", "hexo-theme-stellar", "--workspaces", "--depth=0", "--package-lock-only", "--json"];
+  const npmShell = process.platform === "win32";
+  const result = npmShell
+    ? spawnSync(`npm.cmd ${args.join(" ")}`, [], { shell: true, cwd: root, encoding: "utf8" })
+    : spawnSync("npm", args, { cwd: root, encoding: "utf8" });
+  if (result.error) throw result.error;
+  let problems = [];
+  try {
+    problems = JSON.parse(result.stdout || "{}").problems || [];
+  } catch {
+    problems = [];
+  }
+  if (problems.length > 0) {
+    throw new Error(`主题依赖与 blueprints.json 的 ${themeVersion} 不一致：\n${problems.join("\n")}`);
+  }
+  if (result.status !== 0) throw new Error(`npm ls 读不到主题依赖：${(result.stderr || "").trim()}`);
+}
+
 export function clearCache(directory = cacheDir, siteId = selectedId) {
   if (siteId) {
     fs.rmSync(path.join(directory, `development-${siteId}.yml`), { force: true });
@@ -161,9 +182,11 @@ function checkStructure() {
     assertFile(path.join(baseDir, "_config.yml"));
     assertFile(path.join(baseDir, "_config.stellar.yml"));
     const pkg = JSON.parse(fs.readFileSync(path.join(baseDir, "package.json"), "utf8"));
-    if (pkg.dependencies?.["hexo-theme-stellar"] !== themeSpec) {
-      throw new Error(`${site.id} does not use ${themeSpec}`);
+    if (pkg.dependencies?.["hexo-theme-stellar"] !== themeVersion) {
+      throw new Error(`${site.id} 的主题依赖不是 ${themeVersion}`);
     }
+    // 仓库不发布 npm，示例站的 package.json 只描述依赖，版本事实不在站点里写第二份。
+    if ("version" in pkg) throw new Error(`${site.id} 的 package.json 不应包含 version`);
     // Hexo 由各站自己锁死精确版本，站点之间必须一致；版本值不在这里写第二份。
     const hexoVersion = pkg.dependencies?.hexo || "";
     if (!/^\d+\.\d+\.\d+$/.test(hexoVersion)) throw new Error(`${site.id} 必须锁定精确的 Hexo 版本，当前是 ${hexoVersion || "<missing>"}`);
@@ -180,19 +203,17 @@ function checkStructure() {
   if (hexoVersions.size !== 1) throw new Error(`示例站没有锁定同一个 Hexo 版本：${[...hexoVersions].join(" / ")}`);
   const hexoVersion = [...hexoVersions][0];
   const rootPackage = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
+  // 根 package.json 是工作区与命令入口，同样不发布 npm，因此不带 version。
+  if ("version" in rootPackage) throw new Error("根 package.json 不应包含 version");
   const cliRepository = fs.readFileSync(path.join(root, "main.mjs"), "utf8").match(/const DEFAULT_REPOSITORY = "([^"]+)"/)?.[1] || "";
   if (cliRepository !== blueprintManifest.repository) {
     throw new Error(`main.mjs 的 DEFAULT_REPOSITORY（${cliRepository || "<missing>"}）与 blueprints.json 的 repository（${blueprintManifest.repository}）不一致`);
   }
+  // 仓库版本与主题版本取同一个值，owner 是 blueprints.json 的 theme.version；
+  // 只有独立运行的入口需要字面量，这里把这份副本钉回 owner。
   const cliVersion = fs.readFileSync(path.join(root, "main.mjs"), "utf8").match(/const DEFAULT_VERSION = "([^"]+)"/)?.[1] || "";
-  const versions = new Map([
-    ["package.json", rootPackage.version],
-    ["blueprints.json", blueprintManifest.version],
-    ["main.mjs", cliVersion],
-    ...sites.map(site => [`${site.source}/package.json`, JSON.parse(fs.readFileSync(path.join(root, site.source, "package.json"), "utf8")).version])
-  ]);
-  if (new Set(versions.values()).size !== 1) {
-    throw new Error(`版本号不一致：${[...versions].map(([file, version]) => `${file} ${version || "<missing>"}`).join(" / ")}`);
+  if (cliVersion !== blueprintManifest.theme.version) {
+    throw new Error(`main.mjs 的 DEFAULT_VERSION（${cliVersion || "<missing>"}）与 blueprints.json 的 theme.version（${blueprintManifest.theme.version}）不一致`);
   }
   // 独立运行的入口自带 Node 最低版本副本，这里钉住它们与 engines.node 一致。
   for (const file of ["main.mjs", "install.sh", "install.ps1"]) {
@@ -205,25 +226,23 @@ function checkStructure() {
     throw new Error("Root workspaces do not match the site manifest order");
   }
   const lock = JSON.parse(fs.readFileSync(path.join(root, "package-lock.json"), "utf8"));
+  assertThemeRange();
   const themeLocks = sites.map(site => {
     const entry = lock.packages?.[`${site.source}/node_modules/hexo-theme-stellar`];
     if (!entry) throw new Error(`Root lock is missing ${site.id}'s Stellar package`);
-    if (entry.resolved !== themeSpec) {
-      throw new Error(`${site.id} lock entry does not resolve to the immutable HTTPS theme candidate ${themeCandidate}`);
-    }
     if (!entry.integrity) throw new Error(`${site.id} lock entry has no integrity record`);
     return entry;
   });
+  if (new Set(themeLocks.map(entry => entry.version)).size !== 1) {
+    throw new Error(`示例站锁定了不同的 Stellar 版本：${themeLocks.map(entry => entry.version).join(" / ")}`);
+  }
   if (new Set(themeLocks.map(entry => entry.resolved)).size !== 1) {
-    throw new Error("Workspace lock entries resolve different Stellar commits");
+    throw new Error("Workspace lock entries resolve different Stellar packages");
   }
   if (new Set(themeLocks.map(entry => entry.integrity)).size !== 1) {
     throw new Error("Workspace lock entries contain different Stellar integrity records");
   }
-  if (themeLocks.some(entry => entry.version !== blueprintManifest.theme.version)) {
-    throw new Error(`blueprints.json 的 theme.version（${blueprintManifest.theme.version}）与锁文件实际安装的 Stellar 版本（${themeLocks.map(entry => entry.version).join(" / ")}）不一致`);
-  }
-  process.stdout.write(`Structure passed: Hexo ${hexoVersion} + Stellar ${themeCandidate}\n`);
+  process.stdout.write(`Structure passed: Hexo ${hexoVersion} + Stellar ${themeLocks[0].version} (${themeVersion})\n`);
 }
 
 function checkOutputs() {

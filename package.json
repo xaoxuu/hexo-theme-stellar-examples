@@ -1,6 +1,5 @@
 {
   "name": "hexo-theme-stellar-examples",
-  "version": "2.0.0-alpha.1",
   "private": true,
   "description": "Hexo 8 monorepo for Stellar Blueprint demos and acceptance.",
   "engines": {
@@ -9,9 +8,9 @@
   "workspaces": [
     "case4011-lightblog",
     "case4012-minimalblog",
-    "case4041-notebook",
     "case4021-knowledge",
-    "case4031-docs"
+    "case4031-docs",
+    "case4041-notebook"
   ],
   "scripts": {
     "start": "node main.mjs",

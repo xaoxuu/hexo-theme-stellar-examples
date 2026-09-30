@@ -1,10 +1,8 @@
 {
   "schema_version": 1,
-  "version": "2.0.0-alpha.1",
   "repository": "xaoxuu/hexo-theme-stellar-examples",
   "theme": {
-    "version": "2.0.0-rc.6",
-    "spec": "https://github.com/xaoxuu/hexo-theme-stellar/archive/7734b6da2e7f29c727fdaa2ff14be2d1a9b2c90d.tar.gz"
+    "version": "2.0.x"
   },
   "blueprints": [
     {
@@ -18,11 +16,6 @@
       "source": "case4012-minimalblog"
     },
     {
-      "id": "notebook",
-      "description": "笔记优先的个人笔记本，用笔记本与标签整理零散想法。",
-      "source": "case4041-notebook"
-    },
-    {
       "id": "knowledge",
       "description": "内容聚合型知识博客，展示专题、标签与系统化整理方式。",
       "source": "case4021-knowledge"
@@ -31,6 +24,11 @@
       "id": "docs",
       "description": "单项目 Wiki 文档站，展示从安装到配置的完整文档旅程。",
       "source": "case4031-docs"
+    },
+    {
+      "id": "notebook",
+      "description": "笔记优先的个人笔记本，用笔记本与标签整理零散想法。",
+      "source": "case4041-notebook"
     }
   ]
 }

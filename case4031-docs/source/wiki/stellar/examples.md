@@ -16,9 +16,9 @@ permalink: /examples/
 | :-- | :-- | :-- |
 | `case4011-lightblog` / `lightblog` | 单栏极简博客，适合长文与低干扰阅读 | Flat |
 | `case4012-minimalblog` / `minimalblog` | 极简侧栏写作博客，适合安静地写长文与笔记 | Minimal |
-| `case4041-notebook` / `notebook` | 笔记优先的个人笔记本，用笔记本与标签整理零散想法 | Card |
 | `case4021-knowledge` / `knowledge` | 内容聚合型个人知识库 | Glass |
 | `case4031-docs` / `docs` | 单项目文档站，项目首页位于根路径 | Flat |
+| `case4041-notebook` / `notebook` | 笔记优先的个人笔记本，用笔记本与标签整理零散想法 | Card |
 
 ## 使用 Stellar 主题的博客
 

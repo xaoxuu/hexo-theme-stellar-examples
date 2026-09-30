@@ -1,5 +1,4 @@
 name: 生活观察
-headline: 生活观察
 tagline: 随手记下的日常
 description: 先留一句话，攒够一点再回头整理成完整的记录。
 route:
@@ -10,3 +9,4 @@ listing:
   sort:
     field: date
     direction: desc
+cover: /assets/lissete-laverde-7OFTxbGWqwk-unsplash.jpg

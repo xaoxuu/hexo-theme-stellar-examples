@@ -10,9 +10,9 @@ Stellar 可以只是一个安静的博客，也可以慢慢长成个人知识库
 | --- | --- |
 | [`case4011-lightblog`](case4011-lightblog/) / `lightblog` | 只想安静写文章，不需要常驻侧栏 |
 | [`case4012-minimalblog`](case4012-minimalblog/) / `minimalblog` | 想要极简侧栏，把注意力留给长文和笔记 |
-| [`case4041-notebook`](case4041-notebook/) / `notebook` | 想用笔记本和标签整理零散想法与长期笔记 |
 | [`case4021-knowledge`](case4021-knowledge/) / `knowledge` | 想把文章、项目资料和长期主题放在一起 |
 | [`case4031-docs`](case4031-docs/) / `docs` | 正在给一个项目维护完整文档 |
+| [`case4041-notebook`](case4041-notebook/) / `notebook` | 想用笔记本和标签整理零散想法与长期笔记 |
 
 拿不准时从 `lightblog` 开始。它保留写作和阅读需要的部分，其它能力等以后真的用到再加。
 
@@ -38,9 +38,9 @@ npm run dev -- --site lightblog
 
 - `lightblog` 展示单栏阅读、顶部导航和偏长的中文文章。
 - `minimalblog` 展示极简侧栏和适合长文、笔记的排版。
-- `notebook` 把笔记分进多本笔记本，用层级标签组织，并保留一栏随时间发布的近况。
 - `knowledge` 把博客文章与两套 Wiki 放在一起，方便比较两种内容组织方式。
 - `docs` 只有一套项目文档，首页、目录、内容组件和发布清单都围绕同一个项目。
+- `notebook` 把笔记分进多本笔记本，用层级标签组织，并保留一栏随时间发布的近况。
 
 每个目录都有自己的说明，列出最值得修改的配置和内容文件。
 
@@ -91,4 +91,4 @@ node scripts/blueprint-artifacts.mjs check --theme-tarball /absolute/path/to/hex
 
 ## 版本说明
 
-仓库中的示例锁定同一个 Stellar 候选 commit，具体值以 [`blueprints.json`](blueprints.json) 和各站点 `package.json` 为准。Beta、RC 或稳定版是否发布，要看主题与示例仓库的实际 Release，不能从目录名推断。
+示例站把 Stellar 依赖声明成 `2.0.x` 范围，owner 是 [`blueprints.json`](blueprints.json) 的 `theme.version`；实际安装的补丁版本由根锁文件钉住，跟进补丁只需刷新锁文件，不必改仓库里的任何声明。仓库不发布 npm，根与各示例站的 `package.json` 只描述工作区与依赖，都不写 `version`。Beta、RC 或稳定版是否发布，要看主题与示例仓库的实际 Release，不能从目录名推断。

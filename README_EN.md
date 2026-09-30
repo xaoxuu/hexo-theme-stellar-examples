@@ -10,9 +10,9 @@ Stellar can be a quiet writing space or grow into a personal knowledge base. Thi
 | --- | --- |
 | [`case4011-lightblog`](case4011-lightblog/) / `lightblog` | A quiet home for essays without a permanent sidebar |
 | [`case4012-minimalblog`](case4012-minimalblog/) / `minimalblog` | A minimal sidebar blog that keeps the focus on long-form writing |
-| [`case4041-notebook`](case4041-notebook/) / `notebook` | A notebook-first site that sorts loose notes with notebooks and tags |
 | [`case4021-knowledge`](case4021-knowledge/) / `knowledge` | Articles and long-lived knowledge in the same site |
 | [`case4031-docs`](case4031-docs/) / `docs` | Documentation for one project |
+| [`case4041-notebook`](case4041-notebook/) / `notebook` | A notebook-first site that sorts loose notes with notebooks and tags |
 
 If you are unsure, choose `lightblog`. It gives you the smallest useful Stellar site and leaves the other systems for later.
 
@@ -66,4 +66,4 @@ npm run check:blueprints
 npm run check
 ```
 
-The check commands discover every site registered in the catalog and validate the generated Blueprint artifacts. All cases are pinned to the same Stellar candidate. Read [`blueprints.json`](blueprints.json) and the site package files for the exact commit; do not infer a published version from the repository version string.
+The check commands discover every site registered in the catalog and validate the generated Blueprint artifacts. Every case declares the same Stellar range and the root lock file pins the exact patch version that gets installed, so following a patch only means refreshing that lock. The repository itself is never published to npm, so no package file carries a version. Read [`blueprints.json`](blueprints.json) for the range and the root lock file for the installed version.

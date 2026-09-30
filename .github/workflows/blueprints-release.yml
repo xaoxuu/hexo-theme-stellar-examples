@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       release_tag:
-        description: Existing GitHub Release tag, must equal v + package version
+        description: Existing GitHub Release tag, must equal v + blueprints.json theme.version
         required: true
         type: string
 
@@ -27,7 +27,7 @@ jobs:
       - name: Validate requested tag
         shell: bash
         run: |
-          expected="v$(node -p 'require("./package.json").version')"
+          expected="v$(node -p 'require("./blueprints.json").theme.version')"
           test "${{ inputs.release_tag }}" = "$expected"
 
       - name: Install dependencies

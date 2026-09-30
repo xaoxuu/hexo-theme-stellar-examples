@@ -1,5 +1,4 @@
 name: 读书笔记
-headline: 读书笔记
 tagline: 摘录、评论与实践
 description: 把读到的内容写成自己的问题，再按书目和主题重新找到。
 route:
@@ -10,3 +9,4 @@ listing:
   sort:
     field: date
     direction: desc
+cover: /assets/jaredd-craig-HH4WBGNyltc-unsplash.jpg
